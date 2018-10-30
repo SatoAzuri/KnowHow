@@ -1,0 +1,26 @@
+<!--Menu-->
+<div class="jumbotron">
+  <div style="background-color:cadetblue">
+    <button class="btn" mat-button routerLink="/about-us">About us</button>
+    <button class="btn" mat-button routerLink="/contact-us">Contact us</button>
+    <button class="btn" mat-button routerLink="/chapter">{{signin? 'Progress':'Subscribe'}}</button>
+    <button class="btn" mat-button routerLink="/signin">{{signin? 'Log out':'Sign in'}}</button>
+    <button class="btn" mat-button routerLink="/">Home</button>
+  </div>
+  <router-outlet></router-outlet>
+
+  <!-- Footer -->
+  <footer class="know-how-footer">
+
+    <!-- Copyright -->
+    Know-How © 2018 Copyright
+
+
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
+
+</div>
+  
+
