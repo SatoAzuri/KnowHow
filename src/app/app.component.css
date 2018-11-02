@@ -1,6 +1,10 @@
 .know-how-footer {
-
-  background-color:cornflowerblue;
-  padding:2% 0%;
-  text-align:center;
+  font-family: 'Mali', cursive;
+  background-color: cornflowerblue;
+  padding: 2% 0%;
+  text-align: center;
+  clear: both;
+}
+.btn {
+  font-family: 'Mali', cursive;
 }
