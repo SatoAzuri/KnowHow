@@ -1,12 +1,12 @@
-<mat-card style="padding-bottom:150px">
+<mat-card style="padding-bottom:150px;font-family: 'Mali', cursive;text-align:center">
   <mat-card-title>
      Please Sign in!
   </mat-card-title>
 
-  <mat-card style=" width:50%;background-color:aliceblue">
-    <div class="example-container">
+  <mat-card style="width:50%;background-color:aliceblue;margin-left:25%">
+    <div class="example-container" >
 
-      <mat-form-field>
+      <mat-form-field id="form">
         <mat-select placeholder="Choose your School">
           <mat-option *ngFor="let school of schools" [value]="school.value">
             {{school.viewValue}}
@@ -14,11 +14,11 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field id="form">
         <input matInput placeholder="Username">
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field id="form">
         <input type="password" matInput placeholder="Password">
       </mat-form-field>
 
@@ -27,7 +27,7 @@
     </div>
 
 
-    <button mat-raised-button color="primary" (click)="signin()">Sign in</button>
+    <button mat-raised-button id="form" color="primary" (click)="signin()">Sign in</button>
 
 
 

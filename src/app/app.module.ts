@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { MatInputModule } from '@angular/material/input';
 import { AppComponent } from './app.component';
@@ -34,6 +35,7 @@ import { MagazineComponent } from './components/magazine/magazine.component';
     MatCheckboxModule,
     MatInputModule,
     MatCardModule,
+    MatExpansionModule,
     MatSelectModule,
     MatMenuModule,
     BrowserAnimationsModule,
