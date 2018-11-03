@@ -69,15 +69,13 @@
   <!--Would u like to add another Assignment?-->
 
   </div>
-<div *ngIf="!admin && fromDB" *ngFor="chapterContent in chapters.chapterContent" class="container">
+<div *ngIf="!admin && fromDB" >
+  <div *ngFor="let chapterContent of chapters[0].content" class="container">
  
   <h3>{{chapterContent.title}}</h3>
   <p id="left">
-    {{chapterContent.contentA number is a basic unit of mathematics. Numbers are used for counting,
-    measuring, and comparing amounts. A number system is a set of symbols,
-    or numerals, that are used to represent numbers. The most common number system
-    uses 10 symbols called digits—0, 1, 2, 3, 4, 5, 6, 7, 8, and 9—and combinations of these digits.
-  </p>
+    {{chapterContent.content}}
+    </p>
   <img id="pic" src="assets/numbers.png">
   <iframe style="width:50%; float:left;height:255px" src="https://www.youtube.com/embed/yxAIBFsRpqU"
           frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -98,3 +96,4 @@
   </ol>
   <h3>1.3Types of numbers.</h3>
 </div>
+  </div>

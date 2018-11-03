@@ -17,6 +17,8 @@ import { MatCardModule } from '@angular/material/card';
 import { SigninComponent } from './components/signin/signin.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MagazineComponent } from './components/magazine/magazine.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 //import { user } from "./Models";
 @NgModule({
   declarations: [
