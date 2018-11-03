@@ -1,3 +1,4 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" >
 <mat-card style="padding-bottom:150px">
   <mat-card-title>
      Please Sign in!
@@ -15,11 +16,15 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Username">
+        <input matInput placeholder="Username" type="text" formControlName="name"
+         [ngClass]="{ 'is-invalid': f.name.errors }" />
+         <div *ngIf="f.name.errors" >
+                            <div *ngIf="f.name.errors.required">Name is required</div>
+                        </div>
       </mat-form-field>
 
       <mat-form-field>
-        <input type="password" matInput placeholder="Password">
+        <input type="password" matInput placeholder="Password" formControlName="password">
       </mat-form-field>
 
 
@@ -27,7 +32,7 @@
     </div>
 
 
-    <button mat-raised-button color="primary" (click)="signin()">Sign in</button>
+    <button type="submit" [disabled]="!profileForm.valid">Submit</button>
 
 
 
@@ -36,3 +41,13 @@
 
 
 </mat-card>
+</form>
+
+<p>
+  Form Value: {{ profileForm.value | json }}
+</p>
+
+
+<p>
+  Form Status: {{ profileForm.status }}
+</p>
