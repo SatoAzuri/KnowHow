@@ -10,7 +10,7 @@ import { SigninService } from './../../signin.service';
   styleUrls: ['./magazine.component.css']
 })
 export class MagazineComponent implements OnInit {
-
+  admin: boolean = false;
   constructor(private router: Router, private route: ActivatedRoute, private ser: SigninService) { }
   magazine: any;
   selectedId: any;
