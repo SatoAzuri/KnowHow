@@ -1,12 +1,13 @@
-<mat-card style="padding-bottom:150px;font-family: 'Mali', cursive;text-align:center">
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" >
+<mat-card style="padding-bottom:150px">
   <mat-card-title>
      Please Sign in!
   </mat-card-title>
 
-  <mat-card style="width:50%;background-color:aliceblue;margin-left:25%">
-    <div class="example-container" >
+  <mat-card style=" width:50%;background-color:aliceblue">
+    <div class="example-container">
 
-      <mat-form-field id="form">
+      <mat-form-field>
         <mat-select placeholder="Choose your School">
           <mat-option *ngFor="let school of schools" [value]="school.value">
             {{school.viewValue}}
@@ -14,12 +15,16 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field id="form">
-        <input matInput placeholder="Username">
+      <mat-form-field>
+        <input matInput placeholder="Username" type="text" formControlName="name"
+         [ngClass]="{ 'is-invalid': f.name.errors }" />
+         <div *ngIf="f.name.errors" >
+                            <div *ngIf="f.name.errors.required">Name is required</div>
+                        </div>
       </mat-form-field>
 
-      <mat-form-field id="form">
-        <input type="password" matInput placeholder="Password">
+      <mat-form-field>
+        <input type="password" matInput placeholder="Password" formControlName="password">
       </mat-form-field>
 
 
@@ -27,7 +32,11 @@
     </div>
 
 
-    <button mat-raised-button id="form" color="primary" (click)="signin()">Sign in</button>
+    <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+
+    <!--
+    <button mat-raised-button color="primary" (click)="signin()">Sign in</button>
+  -->
 
 
 
@@ -36,3 +45,13 @@
 
 
 </mat-card>
+</form>
+
+<p>
+  Form Value: {{ profileForm.value | json }}
+</p>
+
+
+<p>
+  Form Status: {{ profileForm.status }}
+</p>

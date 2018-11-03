@@ -18,6 +18,8 @@ import { SigninComponent } from './components/signin/signin.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MagazineComponent } from './components/magazine/magazine.component';
 import { user } from "./Models";
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +42,8 @@ import { user } from "./Models";
     MatSelectModule,
     MatMenuModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
     RouterModule.forRoot([
       {
         path: 'contact-us',

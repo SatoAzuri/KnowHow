@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SigninService } from './../../signin.service';
 import { Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { Validators } from '@angular/forms';
+
 export interface School {
   value: string;
   viewValue: string;
@@ -12,19 +15,31 @@ export interface School {
 })
 
 export class SigninComponent implements OnInit {
-  
-  constructor(private ser: SigninService, private router: Router) { }
+  profileForm = this.fb.group({
+    name:['', Validators.required],
+    password:['', [Validators.required, Validators.minLength(6)]]
+  });
+  constructor(private ser: SigninService, private router: Router, private fb: FormBuilder) { }
   schools: School[] = [
     { value: '0', viewValue: 'PS-140' },
     { value: '1', viewValue: 'PS-245' },
     { value: '2', viewValue: 'PS-35' }
   ];
+
+
+
   ngOnInit() {
 
   }
 
-  signin() {
-    this.ser.setSignin(true);
-    this.router.navigate(['/', ]);
+  f() { return this.profileForm.controls; }
+
+  onSubmit(){
+    console.warn(this.profileForm.value);
+  }
+
+  //signin() {
+  //this.ser.setSignin(true);
+  //  this.router.navigate(['/', ]);
   }
 }
