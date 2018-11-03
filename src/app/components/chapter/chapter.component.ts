@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./chapter.component.css']
 })
 export class ChapterComponent implements OnInit {
-
+  admin: boolean = false;
+  fromDB: boolean = false;
   constructor() { }
 
   ngOnInit() {
