@@ -15,7 +15,10 @@ export interface School {
 })
 
 export class SigninComponent implements OnInit {
+  submitted = false;
+
   profileForm = this.fb.group({
+    schoolChoose:[null, Validators.required],
     name:['', Validators.required],
     password:['', [Validators.required, Validators.minLength(6)]]
   });
@@ -32,10 +35,22 @@ export class SigninComponent implements OnInit {
 
   }
 
-  f() { return this.profileForm.controls; }
+  get f() { return this.profileForm.controls; }
 
   onSubmit(){
+    this.submitted = true;
+
     console.warn(this.profileForm.value);
+
+    if (this.profileForm.invalid) {
+            return;
+        }
+
+    if(this.profileForm.valid){
+      this.ser.setSignin(true);
+      this.router.navigate(['/', ]);
+    }
+
   }
 
   //signin() {

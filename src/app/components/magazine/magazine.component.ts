@@ -14,6 +14,7 @@ export class MagazineComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private ser: SigninService) { }
   magazine: any;
   selectedId: any;
+  admin: boolean = true;
   panelOpenState = false;
   ngOnInit() {
     //this.magazine = this.route.paramMap.pipe(
