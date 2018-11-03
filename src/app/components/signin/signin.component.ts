@@ -19,7 +19,7 @@ export class SigninComponent implements OnInit {
     name:['', Validators.required],
     password:['', [Validators.required, Validators.minLength(6)]]
   });
-  constructor(private fb: FormBuilder) { }
+  constructor(private ser: SigninService, private router: Router, private fb: FormBuilder) { }
   schools: School[] = [
     { value: '0', viewValue: 'PS-140' },
     { value: '1', viewValue: 'PS-245' },
