@@ -1,7 +1,7 @@
-<div>
+<div *ngIf="user">
   <mat-card style="padding-bottom:45px">
     <mat-card-title>
-      <h1 style="text-align:center; font-family: 'Mali', cursive;"> Magazine 1</h1>
+      <h1 style="text-align:center; font-family: 'Mali', cursive;"> {{magazine.name}}</h1>
     </mat-card-title>
   </mat-card>
   <div style="background-color:lightblue; width: auto; height: -webkit-fill-available;">
@@ -69,7 +69,7 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <ul>
-          <li *ngFor="let item of chapter.content">{{item}}</li>         
+          <li *ngFor="let item of chapter.content">{{item.title}}</li>         
         </ul>
       </mat-expansion-panel>
       </mat-accordion>
@@ -80,4 +80,7 @@
     </mat-card>
   </div>
   </div>
+</div>
+<div *ngIf="!user" style="text-align:center">
+  Please sign in to see the content of magazine
 </div>

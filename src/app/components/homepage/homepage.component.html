@@ -21,6 +21,6 @@
 
 <mat-card [hidden]="!ifgradeclicked">
   <mat-card-content>
-    <img *ngFor="let img of magazines" [src]=img class="magazine-cover" (click)="OpenMagazine('0')"/>
+    <img *ngFor="let magazine of magazines.content" [src]=magazine.pic class="magazine-cover" (click)="OpenMagazine(magazine.id)"/>
   </mat-card-content>
 </mat-card>
