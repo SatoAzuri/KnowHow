@@ -4,8 +4,8 @@
     <button class="btn" mat-button routerLink="/">Know-How</button>
     <button class="btn" mat-button routerLink="/about-us">About us</button>
     <button class="btn" mat-button routerLink="/contact-us">Contact us</button>
-    <button class="btn" mat-button routerLink="/chapter">{{signin? 'Progress':'Subscribe'}}</button>
-    <button class="btn" mat-button routerLink="/signin">{{signin? 'Log out':'Sign in'}}</button>
+    <button *ngIf="user" class="btn" mat-button routerLink="/chapter">Progress</button>
+    <button class="btn" mat-button routerLink="/signin">{{user? 'Log out':'Sign in'}}</button>
 
   </div>
   <router-outlet></router-outlet>

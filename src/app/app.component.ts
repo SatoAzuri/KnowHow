@@ -10,11 +10,13 @@ import { SigninService } from './signin.service';
 })
 export class AppComponent implements OnInit {
   title = 'nata';
-  signin: boolean=false;
-  constructor(private ser: SigninService) { }
+  user: any;
+  constructor(private ser: SigninService) {
+    this.user = ser.getUser();
+  }
 
   ngOnInit(): void {
-    this.signin = this.ser.isSignin();
+    
     
   }
 

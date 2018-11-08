@@ -22,9 +22,11 @@ export class SigninComponent implements OnInit {
   ngOnInit() {
 
   }
-
+  username: string;
+  password: string;
   signin() {
-    this.ser.setSignin(true);
-    this.router.navigate(['/', ]);
+    if (this.ser.setUser(this.schools[0],this.username,this.password)) {
+      this.router.navigate(['/',]);
+    }
   }
 }
