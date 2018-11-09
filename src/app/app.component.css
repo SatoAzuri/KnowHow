@@ -7,4 +7,9 @@
 }
 .btn {
   font-family: 'Mali', cursive;
+  height: 50px;
+  padding: 2% 5%;
+  text-align:center;
+  margin-top:10px;
+  
 }

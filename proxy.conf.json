@@ -1,0 +1,40 @@
+{
+  "/api": {
+    "target": "https://od-api.oxforddictionaries.com/api/v1/entries/en/car",
+    "secure": true,
+    "PathRewrite": { "^/api": "" },
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "headers": {
+      "Accept": "application/json",
+      "app_id": "99bbb128",
+      "app_key": "94f9975834f0f9154c922a086a665b4c"
+    }
+  },
+  "/OwlApi": {
+    "target": "https://owlbot.info/api/v2/dictionary/owl?format=json",
+    "secure": true,
+    "PathRewrite": { "^/OwlApi": "" },
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/NonCORS": {
+    "target": "https://data.cityofnewyork.us/resource/i4gi-tjb9.geojson?speed=55.92",
+    "secure": true,
+    "PathRewrite": { "^/NonCORS": "" },
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+    "/oxfordapi": {
+      "target": "https://od-api.oxforddictionaries.com/api/v1/entries/en/",
+      "secure": true,
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "headers": {
+        "Accept": "application/json",
+        "app_id": "99bbb128",
+        "app_key": "94f9975834f0f9154c922a086a665b4c"
+      },
+      "pathRewrite": { "^/oxfordapi": "" }
+    }
+}

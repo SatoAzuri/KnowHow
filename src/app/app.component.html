@@ -1,11 +1,11 @@
 <!--Menu-->
 <div class="jumbotron">
-  <div style="background-color:cadetblue;font-family: 'Mali', cursive;">
-    <button class="btn" mat-button routerLink="/">Know-How</button>
-    <button class="btn" mat-button routerLink="/about-us">About us</button>
-    <button class="btn" mat-button routerLink="/contact-us">Contact us</button>
-    <button class="btn" mat-button routerLink="/chapter">{{signin? 'Progress':'Subscribe'}}</button>
-    <button class="btn" mat-button routerLink="/signin">{{signin? 'Log out':'Sign in'}}</button>
+  <div style="background-color:cadetblue;font-family: 'Mali', cursive; height:80px">
+    <button class="btn" mat-button routerLink="/"><h3>Know-How</h3></button>
+    <button class="btn" mat-button routerLink="/about-us"><h3>About us</h3></button>
+    <button class="btn" mat-button routerLink="/contact-us"><h3>Contact us</h3></button>
+    <button class="btn" mat-button routerLink="/chapter"><h3>{{signin? 'Progress':'Subscribe'}}</h3></button>
+    <button class="btn" mat-button routerLink="/signin"><h3>{{signin? 'Log out':'Sign in'}}</h3></button>
 
   </div>
   <router-outlet></router-outlet>
@@ -14,7 +14,7 @@
   <footer class="know-how-footer">
 
     <!-- Copyright -->
-    Know-How © 2018 Copyright
+    <h3>Know-How © 2018 Copyright</h3>
 
 
     <!-- Copyright -->

@@ -17,6 +17,15 @@ import { MatCardModule } from '@angular/material/card';
 import { SigninComponent } from './components/signin/signin.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MagazineComponent } from './components/magazine/magazine.component';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { TeacherComponent } from './components/teacher/teacher.component';
+
+//import { Http } from '@angular/http';
+//import { Http, Response, Headers, RequestOptions } from '@angular/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,18 +36,24 @@ import { MagazineComponent } from './components/magazine/magazine.component';
     AssignmentComponent,
     HomepageComponent,
     SigninComponent,
-    MagazineComponent
+    MagazineComponent,
+    TeacherComponent
   ],
   imports: [
     BrowserModule,
-    MatButtonModule,
+    MatButtonModule, 
+    HttpModule,
     MatCheckboxModule,
     MatInputModule,
     MatCardModule,
     MatExpansionModule,
     MatSelectModule,
+    CommonModule,
     MatMenuModule,
     BrowserAnimationsModule,
+    FormsModule,
+    BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot([
       {
         path: 'contact-us',
@@ -63,6 +78,10 @@ import { MagazineComponent } from './components/magazine/magazine.component';
       {
         path: 'signin',
         component:SigninComponent
+      },
+      {
+        path: 'teacher',
+        component: TeacherComponent
       }
     ])
     ],
