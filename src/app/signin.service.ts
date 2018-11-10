@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
 //import { userAuthorization } from "./Models";
+import { HttpClient } from 'selenium-webdriver/http';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable, Subject, of } from 'rxjs';
+//import { Http, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -90,7 +98,7 @@ export class SigninService {
   ];
   magazines_pic: string[][] = [["assets/1.1.jpg", "assets/1.2.jpg", "assets/1.3.jpg"], ["assets/2.1.jpg", "assets/2.2.jpg"]];
 
-  constructor() { }
+  
 
   getMagazines(grade) {
     return this.magazines[0];
@@ -112,7 +120,7 @@ export class SigninService {
     if (exist) {
       this.user = {
         "id": 1,
-        "auth": "Student",
+        "auth": "Teacher",
         "name": "Tatiana",
         "grade": [1, 4],
         "readonly": false
@@ -125,5 +133,26 @@ export class SigninService {
     }
 
 
+  }
+
+  word: String = "aardvark";
+  constructor(private _http: Http) {
+    console.log("BlogHttpService is called");
+  }
+  private extractdata(res: Response) {
+    let body = res;
+    return body || {};
+  }
+  private handleError(err: HttpErrorResponse) {
+    console.log("Handle error Http calls")
+    console.log(err.message);
+    return Observable.throw(err.message);
+  }
+  getDictonaryData(name?): any {
+    if (name) {
+      this.word = name
+    }
+    let respon = this._http.get('/oxfordapi/' + this.word)
+    return respon;
   }
 }

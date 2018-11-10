@@ -40,8 +40,4 @@ export class MagazineComponent implements OnInit {
     this.magazine = this.ser.getMagazine(id);
   }
   //magazines: string[] = [ '1', '2', '3'];
-
-  back() {
-    this.router.navigate(['/']);
-  }
 }

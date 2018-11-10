@@ -19,6 +19,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MagazineComponent } from './components/magazine/magazine.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 //import { user } from "./Models";
 @NgModule({
   declarations: [
@@ -40,7 +43,13 @@ import { FormsModule } from '@angular/forms';
     MatCardModule,
     MatExpansionModule,
     MatSelectModule,
+    CommonModule,
     MatMenuModule,
+    HttpModule,
+    FormsModule,
+    FormsModule,
+    BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([
       {
@@ -60,11 +69,11 @@ import { FormsModule } from '@angular/forms';
         component: MagazineComponent
       },
       {
-        path: '',
+        path: 'home',
         component: HomepageComponent
       },
       {
-        path: 'signin',
+        path: '',
         component:SigninComponent
       }
     ])

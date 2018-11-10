@@ -1,33 +1,37 @@
+<input id="name1" type="text" [(ngModel)]="name" />
+<button (click)="getData()"> Get Data </button>
 <div *ngIf="user.auth == 'Admin'" class="container">
   <!--Form1-->
-<!--enter chapter name-->
-<!--enter chapter type-->
-<!--submit-->
-<!--when submit-->
-<!--Form2-->
-<!--Enter title-->
-<!--Enter content-->
-<!--Add picture if any-->
-<!--Add video if any-->
-<!--Submit-->
-<!--when submit-->
-<!--Add another Form2 or Add Assignment-->
-<!--if Form2 repeat Form2-->
-<!--if Assignment show Form3-->
-<!--Form3-->
-<!--Add question-->
-<!--Add pic if any-->
-<!--Add video if any-->
-<!--Add correct answer-->
-<!--Submit-->
-<!--Assignment-->
-<!--Add question-->
-<!--Add picture if any-->
-<!--Add correct answer-->
-<!--Submit-->
-<!--Would u like to add another Assignment?-->
+  <!--enter chapter name-->
+  <!--enter chapter type-->
+  <!--submit-->
+  <!--when submit-->
+  <!--Form2-->
+  <!--Enter title-->
+  <!--Enter content-->
+  <!--Add picture if any-->
+  <!--Add video if any-->
+  <!--Submit-->
+  <!--when submit-->
+  <!--Add another Form2 or Add Assignment-->
+  <!--if Form2 repeat Form2-->
+  <!--if Assignment show Form3-->
+  <!--Form3-->
+  <!--Add question-->
+  <!--Add pic if any-->
+  <!--Add video if any-->
+  <!--Add correct answer-->
+  <!--Submit-->
+  <!--Assignment-->
+  <!--Add question-->
+  <!--Add picture if any-->
+  <!--Add correct answer-->
+  <!--Submit-->
+  <!--Would u like to add another Assignment?-->
 </div>
 <div *ngIf="user.auth != 'Admin'">
+  <p>Not Parsed {{jsonData}}</p>
+  <p>Prased {{jsonData.metadata | json}}</p>
   <div *ngFor="let content of chapters[0].content" class="container">
     <h3>{{content.title}}</h3>
     <p id="left">{{content.content}}</p>

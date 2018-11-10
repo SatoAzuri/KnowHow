@@ -1,11 +1,11 @@
 <!--Menu-->
 <div class="jumbotron">
   <div style="background-color:cadetblue;font-family: 'Mali', cursive;">
-    <button class="btn" mat-button routerLink="/">Know-How</button>
+    <button class="btn" mat-button routerLink="/home">Know-How</button>
     <button class="btn" mat-button routerLink="/about-us">About us</button>
     <button class="btn" mat-button routerLink="/contact-us">Contact us</button>
     <button *ngIf="user" class="btn" mat-button routerLink="/chapter">Progress</button>
-    <button class="btn" mat-button routerLink="/signin">{{user? 'Log out':'Sign in'}}</button>
+    <button class="btn" mat-button routerLink="/">{{user? 'Log out':'Sign in'}}</button>
 
   </div>
   <router-outlet></router-outlet>

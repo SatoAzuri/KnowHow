@@ -12,19 +12,19 @@ export class HomepageComponent implements OnInit {
   user: any;
   grades: any;
   constructor(private router: Router, private route: ActivatedRoute, private ser: SigninService) {
-    this.user = ser.getUser();
-    if (this.user) {
-      this.grades = this.user.grade;
-    }
-    else {
-      this.grades = ser.getGrades();
-    }
+    
   }
   magazines_pic: string[][] = [["assets/1.1.jpg", "assets/1.2.jpg", "assets/1.3.jpg"], ["assets/2.1.jpg", "assets/2.2.jpg"]];
   magazines: any;
   ifgradeclicked: boolean = false;
   ngOnInit() {
-    
+    this.user = this.ser.getUser();
+    if (this.user) {
+      this.grades = this.user.grade;
+    }
+    else {
+      this.grades = this.ser.getGrades();
+    }
   }
   ChangeGrade(grade) {
     this.ifgradeclicked = true;

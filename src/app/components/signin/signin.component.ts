@@ -26,7 +26,7 @@ export class SigninComponent implements OnInit {
   password: string;
   signin() {
     if (this.ser.setUser(this.schools[0],this.username,this.password)) {
-      this.router.navigate(['/',]);
+      this.router.navigate(['home/',]);
     }
   }
 }
