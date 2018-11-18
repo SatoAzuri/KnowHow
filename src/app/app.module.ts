@@ -17,6 +17,12 @@ import { MatCardModule } from '@angular/material/card';
 import { SigninComponent } from './components/signin/signin.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MagazineComponent } from './components/magazine/magazine.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
 //import { user } from "./Models";
 
 @NgModule({
@@ -39,7 +45,14 @@ import { MagazineComponent } from './components/magazine/magazine.component';
     MatCardModule,
     MatExpansionModule,
     MatSelectModule,
+    CommonModule,
     MatMenuModule,
+    MatTabsModule,
+    HttpModule,
+    FormsModule,
+    FormsModule,
+    BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
@@ -61,11 +74,11 @@ import { MagazineComponent } from './components/magazine/magazine.component';
         component: MagazineComponent
       },
       {
-        path: '',
+        path: 'home',
         component: HomepageComponent
       },
       {
-        path: 'signin',
+        path: '',
         component:SigninComponent
       }
     ])

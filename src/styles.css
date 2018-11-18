@@ -5,3 +5,8 @@
 .mat-card-header-text {
   width: 100%;
 }
+@media (min-width: 576px) {
+  .jumbotron {
+    padding: 3rem 1rem;
+  }
+}
