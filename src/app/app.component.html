@@ -1,27 +1,25 @@
 <!--Menu-->
-<div class="jumbotron">
-  <div style="background-color:cadetblue;font-family: 'Mali', cursive;">
-    <button class="btn" mat-button routerLink="/home">Know-How</button>
-    <button class="btn" mat-button routerLink="/about-us">About us</button>
-    <button class="btn" mat-button routerLink="/contact-us">Contact us</button>
-    <button *ngIf="user" class="btn" mat-button routerLink="/chapter">Progress</button>
-    <button class="btn" mat-button routerLink="/">{{user? 'Log out':'Sign in'}}</button>
-
-  </div>
-  <router-outlet></router-outlet>
-
-  <!-- Footer -->
-  <footer class="know-how-footer">
-
-    <!-- Copyright -->
-    Know-How © 2018 Copyright
-
-
-    <!-- Copyright -->
-
-  </footer>
-  <!-- Footer -->
+<div style="background-color:cadetblue;font-family: 'Mali', cursive;position:fixed;top: 0px; width:100%;z-index:100">
+  <button class="btn" mat-button routerLink="/home">Know-How</button>
+  <button class="btn" mat-button routerLink="/about-us">About us</button>
+  <button class="btn" mat-button routerLink="/contact-us">Contact us</button>
+  <button *ngIf="user" class="btn" mat-button routerLink="/chapter">Progress</button>
+  <button class="btn" mat-button routerLink="/">{{user? 'Log out':'Sign in'}}</button>
 
 </div>
+<div class="jumbotron">
   
+  <router-outlet></router-outlet>
+</div>
 
+<!-- Footer -->
+<footer class="know-how-footer" style="position:fixed;bottom: 0px; width:100%">
+
+  <!-- Copyright -->
+  Know-How © 2018 Copyright
+
+
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
