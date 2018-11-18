@@ -152,7 +152,9 @@ export class SigninService {
     if (name) {
       this.word = name
     }
-    let respon = this._http.get('/oxfordapi/' + this.word)
-    return respon;
+    let respon = this._http.get('/oxfordapi/' + this.word);
+    
+
+    return respon;//maYBE
   }
 }

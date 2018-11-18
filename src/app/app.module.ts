@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { MatTabsModule } from '@angular/material/tabs';
 //import { user } from "./Models";
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { CommonModule } from '@angular/common';
     MatSelectModule,
     CommonModule,
     MatMenuModule,
+    MatTabsModule,
     HttpModule,
     FormsModule,
     FormsModule,

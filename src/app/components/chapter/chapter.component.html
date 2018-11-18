@@ -31,7 +31,7 @@
 </div>
 <div *ngIf="user.auth != 'Admin'">
   <p>Not Parsed {{jsonData}}</p>
-  <p>Prased {{jsonData.metadata | json}}</p>
+  <!--<p>Prased {{jsonData.metadata | json}}</p>-->
   <div *ngFor="let content of chapters[0].content" class="container">
     <h3>{{content.title}}</h3>
     <p id="left">{{content.content}}</p>

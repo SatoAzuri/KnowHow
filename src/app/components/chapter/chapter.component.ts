@@ -77,9 +77,29 @@ export class ChapterComponent implements OnInit {
   getData() {
     this.ser.getDictonaryData(this.name).subscribe(data => {
       console.log(data);
-      this.jsonData = data;
-      var obj = JSON.parse(this.jsonData.results);
-      var k = obj;
+      this.jsonData = data.json();
+      //var obj = JSON.parse(this.jsonData.results);
+      //var k = obj;
+
+      //var obj = JSON.parse(data);
+      var isValid = this.isValidJson(this.jsonData.comtent);
+      this.jsonData = JSON.stringify(data);
+      var u = this.jsonData;
+      if (data.status >= 200 && data.status < 400) {
+        data.forEach(movie => {
+          console.log(movie.title);
+        });
+      } else {
+        console.log('error');
+      }
     });
   }
+  isValidJson(json) {
+  try {
+    JSON.parse(json);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
 }
