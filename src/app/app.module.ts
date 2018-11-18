@@ -24,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 //import { user } from "./Models";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +54,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
     RouterModule.forRoot([
       {
         path: 'contact-us',
