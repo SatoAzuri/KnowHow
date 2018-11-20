@@ -20,7 +20,7 @@ export class MagazineComponent implements OnInit {
   }
   magazine: any;
   selectedId: any;
-  admin: boolean = true;
+ 
   panelOpenState = false;
   ngOnInit() {
     //this.magazine = this.route.paramMap.pipe(
