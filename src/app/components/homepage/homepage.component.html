@@ -11,6 +11,7 @@
       Engage.Motivate.Inspire
     </mat-card-subtitle>
   </mat-card-header>
+  {{test}}
   <mat-card-content [hidden]="!gatData" style="display:inline-flex; overflow:auto; width:100%">    
     <div class="grade" *ngFor="let grade of grades" (click)="ChangeGrade(grade)">
       <span>{{grade}}</span>

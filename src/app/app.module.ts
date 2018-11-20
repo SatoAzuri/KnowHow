@@ -23,8 +23,8 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
+import { TeacherComponent } from './components/teacher/teacher.component';
 //import { user } from "./Models";
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +35,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     AssignmentComponent,
     HomepageComponent,
     SigninComponent,
-    MagazineComponent
+    MagazineComponent,
+    TeacherComponent
   ],
   imports: [
     BrowserModule,
@@ -54,12 +55,10 @@ import { MatTabsModule } from '@angular/material/tabs';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
-    FormsModule,
     RouterModule.forRoot([
       {
         path: 'contact-us',
-        component:ContactUsComponent
+        component: ContactUsComponent
       },
       {
         path: 'about-us',
@@ -79,10 +78,10 @@ import { MatTabsModule } from '@angular/material/tabs';
       },
       {
         path: '',
-        component:SigninComponent
+        component: SigninComponent
       }
     ])
-    ],
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
