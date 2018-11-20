@@ -20,11 +20,15 @@ import { MagazineComponent } from './components/magazine/magazine.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material';
+
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
+import { TeacherComponent } from './components/teacher/teacher.component';
 //import { user } from "./Models";
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,10 +39,14 @@ import { MatTabsModule } from '@angular/material/tabs';
     AssignmentComponent,
     HomepageComponent,
     SigninComponent,
-    MagazineComponent
+    MagazineComponent,
+    TeacherComponent
   ],
   imports: [
     BrowserModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSortModule,
     MatButtonModule,
     MatCheckboxModule,
     MatInputModule,
@@ -54,12 +62,10 @@ import { MatTabsModule } from '@angular/material/tabs';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
-    FormsModule,
     RouterModule.forRoot([
       {
         path: 'contact-us',
-        component:ContactUsComponent
+        component: ContactUsComponent
       },
       {
         path: 'about-us',
@@ -79,10 +85,10 @@ import { MatTabsModule } from '@angular/material/tabs';
       },
       {
         path: '',
-        component:SigninComponent
+        component: SigninComponent
       }
     ])
-    ],
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

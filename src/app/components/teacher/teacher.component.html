@@ -1,0 +1,62 @@
+<div>
+  <mat-card style="padding-bottom:45px">
+    <mat-card-title>
+      <h1 style="text-align:center; font-family: 'Mali', cursive;"> My Classes</h1>
+    </mat-card-title>
+  </mat-card>
+  <div style="width: 30%; background-color:lightblue; padding:1%; float:left;">
+    <mat-accordion *ngFor=" let class of classes">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{class.name}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ul *ngFor=" let mag of class.magazines">
+          <li (click)="accessStudents(class.name,mag)">{{mag}}</li>
+
+        </ul>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+
+
+  </div>
+  <div [hidden]="!curClass" style="width: 70%; background-color:lightblue; padding:1%; float:left">
+    <mat-card style="background-color:white; overflow:-webkit-paged-x">
+      <!--<div class="mat-elevation-z8">-->
+      <!--<table mat-table [dataSource]="dataSource">-->
+      <p>{{curClass}}<br>{{curMag}}</p>
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+        <!--  First Name Column -->
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>  First Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
+        <!-- Last Name Column -->
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+        <!-- Chapter 1 Column -->
+        <ng-container matColumnDef="chapter">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Chapter 1 </th>
+          <td mat-cell *matCellDef="let element"> {{element.chapter}} </td>
+        </ng-container>
+        <!-- Total Column -->
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Total</th>
+          <td mat-cell *matCellDef="let element"> {{element.chapter}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </mat-card>
+  </div>
+</div>

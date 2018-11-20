@@ -33,11 +33,16 @@ export class HomepageComponent implements OnInit, AfterViewInit {
     var gr:number[];
     if (this.user) {
       gr = this.user.grade;
+      while (!gr) {
+        if (gr)
+          this.gatData = true;
+      }
     }
     else {
       gr = await this.ser.getGrades();
     }
-    this.gatData = true;
+    if (gr.length>0)
+      this.gatData = true;
     return gr;
   }
 
@@ -48,6 +53,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
       //console.log(this.grades)
     //);
     //this.grades = this.getGrades();
+    
   }
   ngAfterViewInit() {
     //this.user = this.ser.getUser();
@@ -62,6 +68,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
   ChangeGrade(grade) {
     this.ifgradeclicked = true;
     this.magazines = this.ser.getMagazines(0);
+    this.gatData = true;
   }
 
   OpenMagazine(id) {
