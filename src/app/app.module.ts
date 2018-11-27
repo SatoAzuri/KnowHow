@@ -58,7 +58,7 @@ import { TeacherComponent } from './components/teacher/teacher.component';
     MatTabsModule,
     HttpModule,
     FormsModule,
-    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,

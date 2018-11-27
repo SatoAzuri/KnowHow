@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SigninService } from './../../signin.service';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
+
 export interface School {
   value: string;
   viewValue: string;
@@ -12,7 +15,14 @@ export interface School {
 })
 
 export class SigninComponent implements OnInit {
-  constructor(private ser: SigninService, private router: Router) {
+  submitted = false;
+
+  profileForm = this.fb.group({
+    schoolChoose:[null, Validators.required],
+    name:['', Validators.required],
+    password:['', [Validators.required, Validators.minLength(6)]]
+  });
+  constructor(private ser: SigninService, private router: Router, private fb: FormBuilder) {
   }
   schools: School[] = [
     { value: '0', viewValue: 'PS-140' },
@@ -25,11 +35,26 @@ export class SigninComponent implements OnInit {
 
   username: string;
   password: string;
-  signin() {
+
+  get f() { return this.profileForm.controls; }
+
+  onSubmit(){
+    this.submitted = true;
+
+    console.warn(this.profileForm.value);
+
+    if (this.profileForm.invalid) {
+            return;
+        }
+
+    if(this.profileForm.valid){
+      this.router.navigate(['home/', ]);
+    }
+
+  }
+  /*signin() {
     if (this.ser.setUser(this.schools[0],this.username,this.password)) {
       this.router.navigate(['home/',]);
     }
-  }
+  }*/
 }
-
-
