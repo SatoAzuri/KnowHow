@@ -22,6 +22,23 @@
           </ul>
         </mat-expansion-panel>
       </mat-accordion>
+    
+
+    <mat-card>
+      <mat-card-title>
+        <p style="text-align:center; font-family: 'Mali', cursive;"> Dictionary</p>
+
+        <span>
+          <input id="name" type="text" [(ngModel)]="name" />
+          <button (click)="getData()">Definition </button>
+          <br />
+          <label>
+          </label>
+          <label>{{results}}</label>
+        </span>
+
+      </mat-card-title>
+    </mat-card>
     </div>
     <div style="width: 70%;  padding:1%; float:left;">
       <mat-card style="background-color:white;overflow-y: scroll;height: -webkit-fill-available;">

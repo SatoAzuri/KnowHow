@@ -7,11 +7,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 //import { map, catchError, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpClient } from 'selenium-webdriver/http';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
-
+//import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+//import { HttpErrorResponse } from '@angular/common/http';
+//import { Observable, Subject, of } from 'rxjs';
+//import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-chapter, json-pipe',
@@ -22,6 +25,11 @@ export class ChapterComponent implements OnInit {
   admin: boolean = false;
   fromDB: boolean = true;
   user: any;
+  name: any;
+  dictData;
+  jsonData: any;
+  headers;
+  results: any;
   chapters = [
     {
       id: 1,
@@ -66,40 +74,71 @@ export class ChapterComponent implements OnInit {
       ]
     }
   ];
-  name: any;
-  jsonData: any;
-  constructor(private ser: SigninService, private _http: Http) {
-    this.user = ser.getUser();
-  }
+//  name: any;
+//  jsonData: any;
+//  constructor(private ser: SigninService, private _http: Http) {
+//    this.user = ser.getUser();
+//  }
+
+//  ngOnInit() {
+//  }
+//  getData() {
+//    this.ser.getDictonaryData(this.name).subscribe(data => {
+//      console.log(data);
+//      this.jsonData = data.json();
+//      //var obj = JSON.parse(this.jsonData.results);
+//      //var k = obj;
+
+//      //var obj = JSON.parse(data);
+//      var isValid = this.isValidJson(this.jsonData.comtent);
+//      this.jsonData = JSON.stringify(data);
+//      var u = this.jsonData;
+//      if (data.status >= 200 && data.status < 400) {
+//        data.forEach(movie => {
+//          console.log(movie.title);
+//        });
+//      } else {
+//        console.log('error');
+//      }
+//    });
+//  }
+//  isValidJson(json) {
+//  try {
+//    JSON.parse(json);
+//    return true;
+//  } catch (e) {
+//    return false;
+//  }
+//}
+//}
+
+
+
+//@Component({
+//  selector: 'app-chapter, json-pipe',
+//  templateUrl: './chapter.component.html',
+//  styleUrls: ['./chapter.component.css']
+//})
+//export class ChapterComponent implements OnInit {
+  
+
+  constructor(private ser: SigninService,
+    private _http: HttpClient
+  ) { this.user = ser.getUser();}
 
   ngOnInit() {
   }
-  getData() {
-    this.ser.getDictonaryData(this.name).subscribe(data => {
-      console.log(data);
-      this.jsonData = data.json();
-      //var obj = JSON.parse(this.jsonData.results);
-      //var k = obj;
 
-      //var obj = JSON.parse(data);
-      var isValid = this.isValidJson(this.jsonData.comtent);
-      this.jsonData = JSON.stringify(data);
-      var u = this.jsonData;
-      if (data.status >= 200 && data.status < 400) {
-        data.forEach(movie => {
-          console.log(movie.title);
-        });
-      } else {
-        console.log('error');
-      }
-    });
-  }
-  isValidJson(json) {
-  try {
-    JSON.parse(json);
-    return true;
-  } catch (e) {
-    return false;
+  getData() {
+    this.ser.getDictonaryData(this.name)
+      .subscribe(data => {
+        console.log(data);
+        this.jsonData = data;
+        var objJsonString = JSON.stringify(data);
+        var objParsed = JSON.parse(objJsonString);
+        this.results = objParsed.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0];
+
+      });
   }
 }
-}
+

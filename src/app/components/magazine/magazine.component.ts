@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { SigninService } from './../../signin.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -13,32 +14,38 @@ export class MagazineComponent implements OnInit {
   admin: boolean = false;
   chapters: any;
   user: any;
-  constructor(private router: Router, private route: ActivatedRoute, private ser: SigninService) {
+  name: any;
+  dictData;
+  jsonData: any;
+  headers;
+  results: any;
+  constructor(private router: Router, private route: ActivatedRoute, private ser: SigninService,
+    private _http: HttpClient) {
     this.user = ser.getUser();
     this.magazine = ser.getMagazine(0); //send id from router 
     this.chapters = ser.getChapters(this.magazine.id);
   }
   magazine: any;
   selectedId: any;
- 
+
   panelOpenState = false;
   ngOnInit() {
-    //this.magazine = this.route.paramMap.pipe(
-      //switchMap((params: ParamMap) =>
-      //  this.ser.getMagazine(params.get('id')))
-    //);
-    //this.magazine = this.route.paramMap.pipe(
-      //switchMap(params => {
-        // (+) before `params.get()` turns the string into a number
-        //this.selectedId = +params.get('id');
-        //return this.ser.getMagazine(this.selectedId);
-      //})
-    //);
-    //let b = this.magazine;
 
-      let id = this.route.snapshot.paramMap.get('id');
+
+    let id = this.route.snapshot.paramMap.get('id');
 
     this.magazine = this.ser.getMagazine(id);
   }
-  //magazines: string[] = [ '1', '2', '3'];
+  getData() {
+    this.ser.getDictonaryData(this.name)
+      .subscribe(data => {
+        console.log(data);
+        this.jsonData = data;
+        var objJsonString = JSON.stringify(data);
+        var objParsed = JSON.parse(objJsonString);
+        this.results = objParsed.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0];
+
+      });
+
+  }
 }
