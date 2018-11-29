@@ -11,10 +11,19 @@ import { SigninService } from './signin.service';
 export class AppComponent implements OnInit {
   title = 'nata';
   user: any;
+
   constructor(private ser: SigninService) {
     this.user = ser.getUser();
+   
   }
+  logout() {
 
+    if (this.user) {
+
+      this.user = null;
+    }
+
+  }
   ngOnInit(): void {
     
     

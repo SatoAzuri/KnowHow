@@ -86,6 +86,10 @@ import { TeacherComponent } from './components/teacher/teacher.component';
       {
         path: '',
         component: SigninComponent
+      },
+      {
+        path: 'teacher',
+        component: TeacherComponent
       }
     ])
   ],

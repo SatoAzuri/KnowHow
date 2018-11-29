@@ -3,8 +3,8 @@
   <button class="btn" mat-button routerLink="/home">Know-How</button>
   <button class="btn" mat-button routerLink="/about-us">About us</button>
   <button class="btn" mat-button routerLink="/contact-us">Contact us</button>
-  <button *ngIf="user" class="btn" mat-button routerLink="/chapter">Progress</button>
-  <button class="btn" mat-button routerLink="/">{{user? 'Log out':'Sign in'}}</button>
+  <button  class="btn" mat-button routerLink="/teacher">Progress</button>
+  <button class="btn" (click)="logout()" mat-button routerLink="/">{{user? 'Log out':'Sign in'}}</button>
 
 </div>
 <div class="jumbotron">
