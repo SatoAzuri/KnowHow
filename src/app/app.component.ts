@@ -14,7 +14,11 @@ export class AppComponent implements OnInit {
   constructor(private ser: SigninService) {
     this.user = ser.getUser();
   }
-
+logout() {
+     if (this.user) {
+       this.user = null;
+    }
+   }
   ngOnInit(): void {
     
     

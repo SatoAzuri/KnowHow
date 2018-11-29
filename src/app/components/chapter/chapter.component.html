@@ -1,5 +1,5 @@
-<input id="name1" type="text" [(ngModel)]="name" />
-<button (click)="getData()"> Get Data </button>
+<!--<input id="name1" type="text" [(ngModel)]="name" />
+<button (click)="getData()"> GetData </button>-->
 <div *ngIf="user.auth == 'Admin'" class="container">
   <!--Form1-->
   <!--enter chapter name-->
@@ -30,9 +30,7 @@
   <!--Would u like to add another Assignment?-->
 </div>
 <div *ngIf="user.auth != 'Admin'">
-  <p>Not Parsed {{jsonData}}</p>
-  <!--<p>Prased {{jsonData.metadata | json}}</p>-->
-  <div *ngFor="let content of chapters[0].content" class="container">
+  <div *ngFor="let content of chapter.content" class="container">
     <h3>{{content.title}}</h3>
     <p id="left">{{content.content}}</p>
     <img id="pic" [src]="content.pic" />

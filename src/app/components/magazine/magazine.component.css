@@ -9,3 +9,17 @@ h3 {
 p {
   font-family: 'Mali', cursive;
 }
+
+button {
+  width: 6em;
+  font-family: 'Mali', cursive;
+}
+
+input {
+  width: 9em;
+  font-family: 'Mali', cursive;
+}
+
+label {
+  font-family: 'Mali', cursive;
+}

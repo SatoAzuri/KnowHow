@@ -1,3 +1,14 @@
-<p>
-  assignment works!
-</p>
+<div *ngFor="let item of assignment">
+
+
+  <h2>
+    {{item.question}}
+  </h2>
+  <img *ngIf="item.pic" id="pic" [src]="item.pic" />
+  <ul *ngFor="let ans of item.options">
+    <li>
+      {{ans}}
+    </li>
+  </ul>
+
+</div>
