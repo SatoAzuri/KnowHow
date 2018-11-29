@@ -10,12 +10,13 @@ p {
   font-family: 'Mali', cursive;
 }
 button {
-  width: 150px;
+  width:6em;
   font-family: 'Mali', cursive;
 }
 input {
-  width: 200px;
+  width: 9em;
   font-family: 'Mali', cursive;
+ 
 }
 label {
   font-family: 'Mali', cursive;

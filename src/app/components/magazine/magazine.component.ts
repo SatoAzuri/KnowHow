@@ -19,6 +19,8 @@ export class MagazineComponent implements OnInit {
   jsonData: any;
   headers;
   results: any;
+  panelOpenState = false;
+  isAssignment = false;
   constructor(private router: Router, private route: ActivatedRoute, private ser: SigninService,
     private _http: HttpClient) {
     this.user = ser.getUser();
@@ -27,14 +29,28 @@ export class MagazineComponent implements OnInit {
   }
   magazine: any;
   selectedId: any;
+  chapter: any;
+  assignment: any;
+  
 
-  panelOpenState = false;
+ 
   ngOnInit() {
 
 
     let id = this.route.snapshot.paramMap.get('id');
 
     this.magazine = this.ser.getMagazine(id);
+  }
+
+  changeChapter(id) {
+    this.chapter = this.chapters[id];
+    this.isAssignment = false;
+   
+    
+  }
+  changeAssignment(id) {
+  this.isAssignment = true;
+    this.assignment = this.chapters[id].assignment;
   }
   getData() {
     this.ser.getDictonaryData(this.name)
@@ -49,3 +65,6 @@ export class MagazineComponent implements OnInit {
 
   }
 }
+
+ 
+
