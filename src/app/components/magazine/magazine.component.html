@@ -1,59 +1,118 @@
+
 <div *ngIf="user">
+
   <mat-card style="padding-bottom:10px">
+
     <mat-card-title>
+
       <h1 style="text-align:center; font-family: 'Mali', cursive;"> {{magazine.name}}</h1>
+
     </mat-card-title>
+
   </mat-card>
+
   <div style="background-color:lightblue; width: auto; height: -webkit-fill-available; margin-bottom: 8%;">
+
+
 
     <div style="width: 30%;  padding:1%; float:left;">
 
+
+
       <mat-accordion multi="false">
+
         <mat-expansion-panel>
+
           <mat-expansion-panel-header>
+
             <mat-panel-title>
+
               Dictionary
+
             </mat-panel-title>
+
             <mat-panel-description>
 
+
+
             </mat-panel-description>
+
           </mat-expansion-panel-header>
+
           <span>
+
             <input id="name" type="text" [(ngModel)]="name" />
+
             <button (click)="getData()">Definition </button>
+
             <br />
+
             <label>
+
             </label>
+
             <label>{{results}}</label>
+
           </span>
+
         </mat-expansion-panel>
+
         <mat-expansion-panel *ngFor="let chapter of chapters">
+
           <mat-expansion-panel-header>
+
             <mat-panel-title (click)="changeChapter(chapter.id)">
+
               {{chapter.name}}
+
             </mat-panel-title>
+
             <mat-panel-description>
+
               {{chapter.type}}
+
             </mat-panel-description>
+
           </mat-expansion-panel-header>
+
           <ul>
+
             <li *ngFor="let item of chapter.content">{{item.title}}</li>
+
             <li (click)="changeAssignment(chapter.id)">Assignment</li>
+
           </ul>
+
         </mat-expansion-panel>
+
       </mat-accordion>
 
 
-     
+
+
+
+
+
     </div>
+
     <div style="width: 70%;  padding:1%; float:left;">
+
       <mat-card style="background-color:white;overflow-y: scroll;height: -webkit-fill-available;">
+
         <app-chapter *ngIf="!isAssignment" [chapter]="chapter"></app-chapter>
+
         <app-assignment *ngIf="isAssignment" [assignment]="assignment"></app-assignment>
+
       </mat-card>
+
     </div>
+
   </div>
+
 </div>
+
 <div *ngIf="!user" style="text-align:center">
+
   Please sign in to see the content of magazine
+
 </div>

@@ -1,0 +1,13 @@
+.SigninService {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.SigninService {
+  margin: 5px;
+}
+
+.example-selected-value {
+  margin: 15px 0;
+  font-family: 'Mali', cursive;
+}

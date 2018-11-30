@@ -41,19 +41,19 @@ export class TeacherComponent implements OnInit {
 
       "name": "Class 1",
       "ID": 0,
-      "magazines": ["Magazine 1", "Magazine 2", "Magazine 3"]
+      "magazines": ["Know-How/September", "Know-How/October", "Know-How/November"]
     },
     {
 
       "name": "Class 2",
       "ID": 1,
-      "magazines": ["Magazine 1", "Magazine 2", "Magazine 3"]
+      "magazines": ["Know-How/September", "Know-How/October", "Know-How/November"]
     },
     {
 
       "name": "Class 3",
       "ID": 2,
-      "magazines": ["Magazine 1", "Magazine 2", "Magazine 3"]
+      "magazines": ["Know-How/September", "Know-How/October", "Know-How/November"]
     }
   ]
 

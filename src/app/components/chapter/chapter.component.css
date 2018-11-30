@@ -1,8 +1,9 @@
 
 #pic {
   float: left;
-  width: 50%;
-  height: 255px;
+  width: 40%;
+  height: 290px;
+  padding: 0.9%;
 }
 
 #left {  
@@ -12,4 +13,10 @@
 .container {
   text-align: center;
   font-family: 'Mali', cursive;
+}
+img{
+
+  
+
+
 }

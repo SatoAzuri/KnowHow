@@ -1,25 +1,36 @@
 <!--Menu-->
-<div style="background-color:cadetblue;font-family: 'Mali', cursive;position:fixed;top: 0px; width:100%;z-index:100">
+<div style="background-color:cadetblue;font-family: 'Mali', cursive;position:fixed;top: 0px; width:100%;z-index:100; height:50px">
   <button class="btn" mat-button routerLink="/home">Know-How</button>
   <button class="btn" mat-button routerLink="/about-us">About us</button>
   <button class="btn" mat-button routerLink="/contact-us">Contact us</button>
-  <button  class="btn" mat-button routerLink="/teacher">Progress</button>
+  <button class="btn" mat-button routerLink="/teacher" [matMenuTriggerFor]="Progress">Progress</button>
+  
+ 
+
+
+
+
+
+
+
+
+
   <button class="btn" (click)="logout()" mat-button routerLink="/">{{user? 'Log out':'Sign in'}}</button>
 
 </div>
-<div class="jumbotron">
-  
-  <router-outlet></router-outlet>
-</div>
+    <div class="jumbotron">
 
-<!-- Footer -->
-<footer class="know-how-footer" style="position:fixed;bottom: 0px; width:100%">
+      <router-outlet></router-outlet>
+    </div>
 
-  <!-- Copyright -->
-  Know-How © 2018 Copyright
+    <!-- Footer -->
+    <footer class="know-how-footer" style="position:fixed;bottom: 0px; width:100%">
+
+      <!-- Copyright -->
+      Know-How © 2018 Copyright
 
 
-  <!-- Copyright -->
+      <!-- Copyright -->
 
-</footer>
-<!-- Footer -->
+    </footer>
+    <!-- Footer -->

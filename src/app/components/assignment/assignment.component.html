@@ -1,14 +1,26 @@
+<h5 style="font-family: 'Mali', cursive;">Answer questions or complete sentence.</h5>
+<br>
 <div *ngFor="let item of assignment">
 
 
-  <h2>
+
+  <p style="font-family: 'Mali', cursive;">
     {{item.question}}
-  </h2>
+  </p>
   <img *ngIf="item.pic" id="pic" [src]="item.pic" />
-  <ul *ngFor="let ans of item.options">
-    <li>
+
+
+  <!--<ul *ngFor="let ans of item.options">
+    <li style="font-family: 'Mali', cursive;">
       {{ans}}
     </li>
-  </ul>
+  </ul>-->
 
+<!--</div>-->
+<mat-radio-group class="SigninService" [(ngModel)]="magazine">
+  <mat-radio-button style="font-family: 'Mali', cursive;"  class="SigninService" *ngFor="let ans of item.options" [value]="ans">
+    {{ans}}
+  </mat-radio-button>
+</mat-radio-group>
+<div class="example-selected-value">Your answer is: {{options}}</div>
 </div>
