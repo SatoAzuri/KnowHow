@@ -16,6 +16,13 @@
   margin-right: 20px;
   display: inline-flex;
 }
+.error-msg {
+  display: flex;
+  position: relative;
+  font-size: 75%;
+  bottom: -2em;
+  color: red;
+}
 #card {
   font-family: 'Mali', cursive;
 }

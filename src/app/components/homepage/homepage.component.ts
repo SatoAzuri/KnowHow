@@ -21,7 +21,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
     this.user = this.ser.getUser();
     //this.grades = this.getGrades();
     this.user = this.ser.getUser();
-    if (this.user) {
+    if (this.user && this.user.auth != "Admin") {
       this.grades = this.user.grade;
     }
     else {
@@ -48,6 +48,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
 
   magazines_pic: string[][] = [["assets/1.1.jpg", "assets/1.2.jpg", "assets/1.3.jpg"], ["assets/2.1.jpg", "assets/2.2.jpg"]];
   ifgradeclicked: boolean = false;
+  errorMessage: string = "";
   ngOnInit() {
     //this.getGrades().then(() =>
       //console.log(this.grades)
@@ -73,7 +74,10 @@ export class HomepageComponent implements OnInit, AfterViewInit {
 
   OpenMagazine(id) {
     //redirect to the magazine page
-    this.router.navigate(['magazine/', 0]);
+    if (this.user)
+      this.router.navigate(['magazine/', 0]);
+    else
+      this.errorMessage = "Please log in to view content.";
   }
 }
 

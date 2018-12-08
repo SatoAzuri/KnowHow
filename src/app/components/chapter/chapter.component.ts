@@ -15,6 +15,8 @@ import { HttpClient } from '@angular/common/http';
 //import { HttpErrorResponse } from '@angular/common/http';
 //import { Observable, Subject, of } from 'rxjs';
 //import { CommonModule } from '@angular/common';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-chapter, json-pipe',
@@ -121,11 +123,42 @@ export class ChapterComponent implements OnInit {
   //  styleUrls: ['./chapter.component.css']
   //})
   //export class ChapterComponent implements OnInit {
+  submitted1 = false;
+  submitted = false;
 
+  //private chapterForm1: FormGroup;
+  chapterForm1 = this.fb.group({
+    chapterName: ['', Validators.required],
+    chapterType: [null, Validators.required]
+  });
+  chapterTypes: ChapterType[] = [
+    { value: '0', viewValue: 'Grade 1' },
+    { value: '1', viewValue: 'Grade 2' },
+    { value: '2', viewValue: 'Grade 3' }
+  ];
 
-  constructor(private ser: SigninService,
-    private _http: HttpClient
-  ) { this.user = ser.getUser(); }
+  constructor(private ser: SigninService, private _http: HttpClient, private fb: FormBuilder)
+  {
+    this.user = ser.getUser();
+  }
+
+  get f() { return this.chapterForm1.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+
+    //console.warn(this.chapterForm1.value);
+
+    if (this.chapterForm1.invalid) {
+      return;
+    }
+
+    if (this.chapterForm1.valid) {
+      this.submitted1 = true;
+    }
+
+  }
+
 
   ngOnInit() {
   }
@@ -143,4 +176,8 @@ export class ChapterComponent implements OnInit {
 
       });
   }
+}
+export interface ChapterType {
+  value: string;
+  viewValue: string;
 }

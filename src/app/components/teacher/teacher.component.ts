@@ -1,6 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatSort } from '@angular/material';
+import { SigninService } from './../../signin.service';
+import { HttpClient } from '@angular/common/http';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-teacher',
@@ -26,35 +32,75 @@ export class TeacherComponent implements OnInit {
 
   }
   accessStudents(id, mag) {
-
     this.curClass = id;
     this.curMag = mag;
+  }
+  classForm = this.fb.group({
+    name: ['', Validators.required],
+    grade: [null, Validators.required]
+  });
+  studentForm = this.fb.group({
+    email: ['', Validators.required],
+  });
+
+  user: any;
+  magazines: any;
+  chapters: any;
+  magazineName: any;
+  submitted: boolean = false;
+  submitted1: boolean = false;
+  classes: any;
 
 
+
+  constructor(private router: Router, private route: ActivatedRoute, private ser: SigninService,
+    private _http: HttpClient, private fb: FormBuilder) {
+    this.user = ser.getUser();
+    if (this.user.auth == "Teacher") {
+      this.classes = ser.getClasses(); // for Teacher
+      this.classes.forEach(function (value) {
+        value["magazines"] = ser.getMagazines(value.grade)
+      });
+    }
+    else if(this.user.auth=="Student")
+      this.magazines = ser.getMagazines(this.user.grade); //send id from router for Student
+  }
+  addClass() {
+    this.submitted = true;
+    if (this.classForm.invalid) {
+      return;
+    }
+    
+    if (this.classForm.valid) {
+      if (this.ifUnique(name)) {
+        if (this.ser.addClass(this.classForm.value.chapterName, this.classForm.value.chapterType)) {
+          this.classes = this.ser.getClasses(); // for Teacher
+          this.classes.forEach(function (value) {
+            value["magazines"] = this.ser.getMagazines(value.grade)
+          });
+          this.submitted1 = true;
+        }
+      }
+      else {
+        //error message
+      }
+    }
+  }
+  
+
+  changeMagazine(id) {
+    this.chapters = this.ser.getChapters(id);
+    //this.scores = this.ser.getGrades()
+    this.magazineName = this.magazines.content[id].name;
   }
 
-  constructor() { }
-
-  classes = [
-    {
-
-      "name": "Class 1",
-      "ID": 0,
-      "magazines": ["Know-How/September", "Know-How/October", "Know-How/November"]
-    },
-    {
-
-      "name": "Class 2",
-      "ID": 1,
-      "magazines": ["Know-How/September", "Know-How/October", "Know-How/November"]
-    },
-    {
-
-      "name": "Class 3",
-      "ID": 2,
-      "magazines": ["Know-How/September", "Know-How/October", "Know-How/November"]
-    }
-  ]
+  ifUnique(name: string): boolean {
+    this.classes.forEach(function (value) {
+      if (value.name == name)
+        return false;
+    }); 
+    return true;    
+  }
 
 
 }

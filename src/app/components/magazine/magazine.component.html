@@ -9,7 +9,7 @@
     <div style="width: 30%;  padding:1%; float:left;">
 
       <mat-accordion multi="false">
-        <mat-expansion-panel>
+        <mat-expansion-panel *ngIf="user.auth != 'Admin'">
           <mat-expansion-panel-header>
             <mat-panel-title>
               Dictionary
@@ -22,10 +22,17 @@
             <input id="name" type="text" [(ngModel)]="name" />
             <button (click)="getData()">Definition </button>
             <br />
-            <label>
-            </label>
             <label>{{results}}</label>
           </span>
+        </mat-expansion-panel>
+        <mat-expansion-panel *ngIf="user.auth == 'Admin'">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Add Chapter +
+            </mat-panel-title>
+            <mat-panel-description>
+            </mat-panel-description>
+          </mat-expansion-panel-header>         
         </mat-expansion-panel>
         <mat-expansion-panel *ngFor="let chapter of chapters">
           <mat-expansion-panel-header>
@@ -48,8 +55,45 @@
     </div>
     <div style="width: 70%;  padding:1%; float:left;">
       <mat-card style="background-color:white;overflow-y: scroll;height: -webkit-fill-available;">
-        <app-chapter *ngIf="!isAssignment" [chapter]="chapter"></app-chapter>
-        <app-assignment *ngIf="isAssignment" [assignment]="assignment"></app-assignment>
+
+        <app-chapter *ngIf="!isAssignment && user.auth != 'Admin'" [chapter]="chapter"></app-chapter>
+
+        <app-assignment *ngIf="isAssignment && user.auth != 'Admin'" [assignment]="assignment" [user]="user" [magazinID]="magazinID" [chapterID]="chapterID"></app-assignment>
+
+        <div class="container" *ngIf="user.auth=='Admin'">
+          <mat-card>
+            <mat-card-title>
+              Please Enter Chapter Name and Subject!
+            </mat-card-title>
+            <form [formGroup]="chapterForm1" (ngSubmit)="onSubmit()">
+
+              <div class="example-container">
+                <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.chapterName.errors }">
+                  <input matInput placeholder="Chapter Name" type="text" formControlName="chapterName">
+                  <div *ngIf="submitted && f.chapterName.errors" class="error-msg">
+                    <div *ngIf="f.chapterName.errors.required">Chapter Name is required.</div>
+                  </div>
+                </mat-form-field>
+                <br />
+                <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.chapterType.errors }">
+                  <mat-select placeholder="Chapter Subject" formControlName="chapterType">
+                    <mat-option *ngFor="let subject of subjects" [value]="subject.value">
+                      {{subject.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                  <div *ngIf="submitted && f.chapterType.errors" class="error-msg">
+                    <div *ngIf="f.chapterType.errors.required">Chapter type is required.</div>
+                  </div>
+                </mat-form-field>
+
+              </div>
+
+              <button mat-raised-button type="submit" color="primary" [disabled]="loading" (click)="addChapter()">Add Chapter</button>
+
+            </form>
+
+          </mat-card>
+          </div>
       </mat-card>
     </div>
   </div>

@@ -1,4 +1,34 @@
-<div>
+<div *ngIf="user.auth == 'Student'">
+  <mat-card style="padding-bottom:45px">
+    <mat-card-title>
+
+      <h1 style="text-align:center; font-family: 'Mali', cursive;"> My Progress</h1>
+    </mat-card-title>
+  </mat-card>
+  <div style="width: 30%; background-color:lightblue; padding:1%; float:left;">
+    <mat-accordion>
+            
+      <mat-expansion-panel *ngFor=" let mag of magazines">
+        <mat-expansion-panel-header>
+          <mat-panel-title style="font-family: 'Mali', cursive;" (click)="changeMagazine(mag.id)">
+            {{mag.name}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div [hidden]="!chapters" style="width: 70%; background-color:lightblue; padding:1%; float:left">
+    <mat-card style="background-color:white; overflow:-webkit-paged-x;font-family: 'Mali', cursive;">
+      <p style="text-align:center">
+        {{magazineName}}
+      </p>
+      <table>
+        <thead></thead>
+      </table>
+    </mat-card>
+  </div>
+</div>
+<div *ngIf="user.auth == 'Teacher'">
   <mat-card style="padding-bottom:45px">
     <mat-card-title>
 
@@ -9,58 +39,40 @@
     <mat-accordion>
 
       <mat-expansion-panel>
-
         <mat-expansion-panel-header>
-
           <mat-panel-title>
-
             Add a new class
-
           </mat-panel-title>
-
-
-
-        </mat-expansion-panel-header>
-        <span>
+        </mat-expansion-panel-header>        
           <form class="example-form">
             <mat-form-field class="example-full-width">
               <input matInput placeholder="Class Name">
             </mat-form-field>
-
             <mat-form-field class="example-full-width">
               <input matInput placeholder="Grade">
             </mat-form-field>
-            <button mat-raised-button color="primary" (click)="addClass()">+Add</button>
-          </form>
-        </span>
-
+              <button mat-raised-button color="primary" (click)="addClass()">+Add</button>
+          </form>        
       </mat-expansion-panel>
       <mat-expansion-panel *ngFor=" let class of classes">
         <mat-expansion-panel-header>
-
           <mat-panel-title style="font-family: 'Mali', cursive;">
             {{class.name}}
           </mat-panel-title>
-
+          <mat-panel-description>
+            {{class.grade}}
+          </mat-panel-description>
         </mat-expansion-panel-header>
         <ul *ngFor=" let mag of class.magazines">
-          <li style="font-family: 'Mali', cursive;" (click)="accessStudents(class.name,mag)">{{mag}}</li>
-
+          <li style="font-family: 'Mali', cursive;" (click)="accessStudents(class.name,mag.name)">{{mag.name}}</li>
         </ul>
       </mat-expansion-panel>
-
     </mat-accordion>
-
-
-
-
   </div>
   <div [hidden]="!curClass" style="width: 70%; background-color:lightblue; padding:1%; float:left">
     <mat-card style="background-color:white; overflow:-webkit-paged-x;font-family: 'Mali', cursive;">
-
       <p style="text-align:center">
         {{curClass}}<br>{{curMag}}
-
       </p>
       <form class="example-form" style="text-align:right;">
         <mat-form-field class="example-full-width">
@@ -68,10 +80,6 @@
         </mat-form-field>
         <button mat-raised-button color="primary" (click)="addStudent">+Add</button>
       </form>
-
-
-
-
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
         <!-- Position Column -->
         <ng-container matColumnDef="position">
@@ -95,14 +103,13 @@
         </ng-container>
         <!-- Total Column -->
         <ng-container matColumnDef="total">
-          <th style="font-family: 'Mali', cursive;" mat-header-cell *matHeaderCellDef mat-sort-header> Total</th>
+          <th style="font-family: 'Mali', cursive;" mat-header-cell *matHeaderCellDef mat-sort-header > Total</th>
           <td style="font-family: 'Mali', cursive;" mat-cell *matCellDef="let element"> {{element.chapter}} </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
       <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-
     </mat-card>
   </div>
 </div>

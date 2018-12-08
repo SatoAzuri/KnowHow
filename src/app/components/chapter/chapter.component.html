@@ -1,6 +1,40 @@
 <!--<input id="name1" type="text" [(ngModel)]="name" />
-<button (click)="getData()"> GetData </button>-->
-<div *ngIf="user.auth == 'Admin'" class="container">
+<button   *ngIf="user.auth != 'Admin'"    (click)="getData()"> GetData </button>-->
+<!--div class="container">
+  <mat-card>
+    <mat-card-title>
+      Please Enter Chapter Name and Type!
+    </mat-card-title>
+    <form [formGroup]="chapterForm1" (ngSubmit)="onSubmit()">
+
+      <div class="example-container">
+        <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.chapterName.errors }">
+          <input matInput placeholder="Chapter Name" type="text" formControlName="chapterName">
+          <div *ngIf="submitted && f.chapterName.errors" class="error-msg">
+            <div *ngIf="f.chapterName.errors.required">Chapter Name is required.</div>
+          </div>
+        </mat-form-field>
+        <br />
+        <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.chapterType.errors }">
+          <mat-select placeholder="Chapter Type" formControlName="chapterType">
+            <mat-option *ngFor="let chapter of chapterTypes" [value]="chapter.value">
+              {{chapter.viewValue}}
+            </mat-option>
+          </mat-select>
+          <div *ngIf="submitted && f.chapterType.errors" class="error-msg">
+            <div *ngIf="f.chapterType.errors.required">Chapter type is required.</div>
+          </div>
+        </mat-form-field>
+
+      </div>
+
+      <button mat-raised-button type="submit" color="primary" [disabled]="loading" (click)="onSubmit()">Submit</button>
+
+    </form>
+
+  </mat-card>
+
+
   <!--Form1-->
   <!--enter chapter name-->
   <!--enter chapter type-->
@@ -28,8 +62,8 @@
   <!--Add correct answer-->
   <!--Submit-->
   <!--Would u like to add another Assignment?-->
-</div>
-<div *ngIf="user.auth != 'Admin'">
+<!--/div-->
+<div *ngIf="user" class="container">
   <div *ngFor="let content of chapter.content" class="container">
     <h3>{{content.title}}</h3>
     <p id="left">{{content.content}}</p>
@@ -37,3 +71,6 @@
     <iframe style="width:50%; float:left;height:255px" src="https://www.youtube.com/embed/yxAIBFsRpqU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
 </div>
+<div *ngIf="!user" class="container">
+  Please sign in to view content
+  </div>

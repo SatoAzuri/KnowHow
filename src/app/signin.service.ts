@@ -8,13 +8,52 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { map } from 'rxjs/operators';
 
+
+export interface User {
+  id: number;
+  auth: string;
+  name: string;
+  grade: number[];
+  readonly: boolean;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class SigninService {
 
-  user: any;
+  user: User = {
+    "id": 1,
+    "auth": "Teacher",
+    "name": "Tatiana",
+    "grade": [],
+    "readonly": false
+  };
+  classes = [
+    {
+
+      "name": "Class 1",
+      "grade":1,
+      "ID": 0,
+      "magazines": []
+    },
+    {
+
+      "name": "Class 2",
+      "grade": 2,
+      "ID": 1,
+      "magazines": []
+    },
+    {
+
+      "name": "Class 3",
+      "grade":2,
+      "ID": 2,
+      "magazines": []
+    }
+  ]
   magazines = [
     {
       "grade": 1,
@@ -80,16 +119,16 @@ export class SigninService {
           answer: "Science"
         },
         {
-          question: "What is math?",
+          question: "What is drawing?",
           pic: "",
           options: ["Science", "Art", "School"],
           answer: "Science"
         },
         {
-          question: "What is math?",
+          question: "What is Apple?",
           pic: "",
-          options: ["Science", "Art", "School"],
-          answer: "Science"
+          options: ["Fruit", "Veggi", "Berry"],
+          answer: "Fruit"
         }
       ]
     },
@@ -121,17 +160,18 @@ export class SigninService {
           answer: "Science"
         },
         {
-          question: "What is math?",
+          question: "What is drawing?",
           pic: "",
           options: ["Science", "Art", "School"],
           answer: "Science"
         },
         {
-          question: "What is math?",
+          question: "What is Apple?",
           pic: "",
-          options: ["Science", "Art", "School"],
-          answer: "Science"
+          options: ["Fruit", "Veggi", "Berry"],
+          answer: "Fruit"
         }
+
       ]
     },
     {
@@ -162,17 +202,18 @@ export class SigninService {
           answer: "Science"
         },
         {
-          question: "What is math?",
+          question: "What is drawing?",
           pic: "",
           options: ["Science", "Art", "School"],
           answer: "Science"
         },
         {
-          question: "What is math?",
+          question: "What is Apple?",
           pic: "",
-          options: ["Science", "Art", "School"],
-          answer: "Science"
+          options: ["Fruit", "Veggi", "Berry"],
+          answer: "Fruit"
         }
+
       ]
     },
     {
@@ -203,32 +244,102 @@ export class SigninService {
           answer: "Science"
         },
         {
-          question: "What is math?",
+          question: "What is drawing?",
           pic: "",
           options: ["Science", "Art", "School"],
           answer: "Science"
         },
         {
-          question: "What is math?",
+          question: "What is Apple?",
           pic: "",
-          options: ["Science", "Art", "School"],
-          answer: "Science"
+          options: ["Fruit", "Veggi", "Berry"],
+          answer: "Fruit"
         }
+
       ]
     },
+  ];
+  users = [
+    {      
+        "id": 1,
+        "auth": "Teacher",
+        "name": "Tatiana",
+        "grade": [],
+        "readonly": false      
+    },
+    {
+      "id": 2,
+      "auth": "Student",
+      "name": "Jessica",
+      "grade": [1],
+      "readonly": false
+    },
+    {
+      "id": 3,
+      "auth": "Admin",
+      "name": "Natalia",
+      "grade": [],
+      "readonly": false
+    }
+  ];
+  auth = [
+    {
+      "username": "teacher",
+      "password": "teacher",
+      "id": 1
+    },
+    {
+      "username": "student",
+      "password": "student",
+      "id": 2
+    },
+    {
+      "username": "admin",
+      "password": "admin",
+      "id": 3
+    }
+  ];
+  scores = [
+    {
+      "scoreID":0,
+      "studentID": 2,
+      "magazineID": 1,
+      "chapterID": 1,
+      "answer0": "yes",
+      "answer1": "yes",
+      "answer2": "yes",
+      "score":75
+
+    }
   ];
   magazines_pic: string[][] = [["assets/1.1.jpg", "assets/1.2.jpg", "assets/1.3.jpg"], ["assets/2.1.jpg", "assets/2.2.jpg"]];
 
 
+  getClasses() {
+    return this.classes;
+  }
+  addClass(name, grade):boolean {
+    this.classes.push(
+      {
+        "name": name,
+        "grade": grade,
+        "ID": this.classes.length,
+        "magazines": this.getMagazines(grade)
+      }
+    );
 
+    return true;
+  }
   getMagazines(grade) {
-    return this.magazines[0];
+    var mags = this.magazines[grade-1].content;
+    return mags;
   }
   getChapters(id) {
     return this.chapters;
   }
   getMagazine(id) {
-    return this.magazines[0].content[0];
+    var mag = this.magazines[0].content[0];
+    return mag;
   }
   getGrades() {
     return [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -236,24 +347,57 @@ export class SigninService {
   getUser() {
     return this.user;
   }
-  setUser(school, username, password) {
-    var exist = true;
-    if (exist) {
-      this.user = {
-        "id": 1,
-        "auth": "Teacher",
-        "name": "Tatiana",
-        "grade": [1, 4],
-        "readonly": false
-      };
+  setAnswer(magazinID, chapterID, answer0, answer1, answer2, score):boolean {
+   let newScore = {
+      "scoreID": this.scores.length,
+      "studentID": this.user.id,
+      "magazineID": magazinID,
+      "chapterID": chapterID,
+      "answer0": answer0,
+      "answer1": answer1,
+      "answer2": answer2,
+      "score": score
+    }
+    this.scores.push(newScore);
+
+    return true;
+  }
+
+  addChapter(magazineid, name, subject): boolean {
+    this.chapters.push(
+      {
+        "id": this.chapters.length,
+        "name": name,
+        "type": subject,
+        "content": [],
+        "assignment":[]
+      }
+    )
+    return true;
+  }
+  setUser(school, username, password): boolean {
+    var id = null;
+    var user = null;
+    //this.user = new User;
+    //var user = User; // = new User();
+    this.auth.forEach(function (value) {
+      if (value.username == username && value.password == password) {
+        id = value.id;
+      }     
+    });
+    if (id) {
+      this.users.forEach(function (val) {
+        if (val.id == id) {
+          user = val;         
+        }
+      });
+    }
+    if (user) {
+      this.user = user;
       return true;
     }
-    else {
-      this.user = null;
-      return false;
-    }
-
-
+    this.user = null;    
+    return false;
   }
 
   //  word: String = "aardvark";
@@ -326,7 +470,7 @@ export class SigninService {
   }
   getDictonaryData(name?): any {
     if (name) {
-      this.word = name
+      this.word = name;
     }
     let respon = this._http.get('/oxfordapi/' + this.word)
 

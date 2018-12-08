@@ -30,4 +30,5 @@
   <mat-card-content>
     <img *ngFor="let magazine of magazines.content" [src]=magazine.pic class="magazine-cover" (click)="OpenMagazine(magazine.id)"/>
   </mat-card-content>
+  <div class="error-msg">{{errorMessage}}</div>
 </mat-card>

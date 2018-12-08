@@ -54,6 +54,7 @@ import { TeacherComponent } from './components/teacher/teacher.component';
     MatExpansionModule,
     MatSelectModule,
     CommonModule,
+    ReactiveFormsModule,
     MatMenuModule,
     MatTabsModule,
     HttpModule,

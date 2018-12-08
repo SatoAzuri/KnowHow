@@ -1,4 +1,4 @@
-<div *ngFor="let item of assignment">
+<!--<div *ngFor="let item of assignment">
 
 
   <h2>
@@ -11,4 +11,67 @@
     </li>
   </ul>
 
+</div>-->
+
+<div class="container" *ngIf="user.auth != 'Admin'">
+  <mat-card>
+    <mat-card-title>
+      Please Complete the assignment!
+    </mat-card-title>
+    <form [formGroup]="assignmentForm" (ngSubmit)="onSubmit()">
+
+      <div class="example-container" >
+        <label>{{assignment[0].question}}</label>
+        <br />
+        <img *ngIf="assignment[0].pic" id="pic" [src]="assignment[0].pic" />
+        <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.answer0.errors }">
+          <mat-select placeholder="Choose an answer" formControlName="answer0">
+            <mat-option *ngFor="let ans of assignment[0].options" [value]="ans">
+              {{ans}}
+            </mat-option>
+          </mat-select>
+          <div *ngIf="submitted && f.answer0.errors" class="error-msg">
+            <div *ngIf="f.answer0.errors.required">Answer is required.</div>
+          </div>
+        </mat-form-field>
+
+      </div>
+      <div class="example-container">
+        <label>{{assignment[1].question}}</label>
+        <br />
+        <img *ngIf="assignment[1].pic" id="pic" [src]="assignment[1].pic" />
+        <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.answer1.errors }">
+          <mat-select placeholder="Choose an answer" formControlName="answer1">
+            <mat-option *ngFor="let ans of assignment[1].options" [value]="ans">
+              {{ans}}
+            </mat-option>
+          </mat-select>
+          <div *ngIf="submitted && f.answer1.errors" class="error-msg">
+            <div *ngIf="f.answer1.errors.required">Answer is required.</div>
+          </div>
+        </mat-form-field>
+
+      </div>
+      <div class="example-container">
+        <label>{{assignment[2].question}}</label>
+        <br />
+        <img *ngIf="assignment[2].pic" id="pic" [src]="assignment[2].pic" />
+        <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.answer2.errors }">
+          <mat-select placeholder="Choose an answer" formControlName="answer2">
+            <mat-option *ngFor="let ans of assignment[2].options" [value]="ans">
+              {{ans}}
+            </mat-option>
+          </mat-select>
+          <div *ngIf="submitted && f.answer2.errors" class="error-msg">
+            <div *ngIf="f.answer2.errors.required">Answer is required.</div>
+          </div>
+        </mat-form-field>
+
+      </div>
+
+      <button mat-raised-button type="submit" color="primary" [disabled]="submitSuccess" (click)="onSubmit()">Submit</button>
+
+    </form>
+    <label *ngIf="score">Your score is: {{score}}</label>
+  </mat-card>
 </div>
