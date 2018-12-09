@@ -30,7 +30,7 @@ export class SigninService {
   //  "readonly": false
   //};
   user: User;
-  classes = [
+  classes:Class[] = [
     {
       "name": "Class 1",
       "grade":"Grade 1",

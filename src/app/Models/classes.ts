@@ -28,7 +28,7 @@ export class Class {
   name: string;
   grade: string;
   ID: number;
-  magazines: string[];
+  magazines: number[];
 }
 
 export class Magazine {

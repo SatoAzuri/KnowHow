@@ -74,16 +74,16 @@
           </form>
         </mat-expansion-panel>
         <mat-expansion-panel *ngFor=" let class of classes">
-          <mat-expansion-panel-header>
-            <mat-panel-title style="font-family: 'Mali', cursive;">
+          <mat-expansion-panel-header (click)="getMagazines(class.ID)">
+            <mat-panel-title style="font-family: 'Mali', cursive;" >
               {{class.name}}
             </mat-panel-title>
             <mat-panel-description>
               {{class.grade}}
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <ul *ngFor=" let mag of class.magazines">
-            <li style="font-family: 'Mali', cursive;" (click)="accessStudents(class.name,mag.name)">{{mag.name}}</li>
+          <ul *ngFor=" let mag of magazinesNames">
+            <li style="font-family: 'Mali', cursive;" (click)="accessStudents(class.name,mag)">{{mag.name}}</li>
           </ul>
         </mat-expansion-panel>
       </mat-accordion>

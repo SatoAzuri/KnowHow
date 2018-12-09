@@ -31,7 +31,8 @@ export class TeacherComponent implements OnInit {
   }
   accessStudents(id, mag) {
     this.curClass = id;
-    this.curMag = mag;
+    this.curMag = mag.name;
+    //get student list
   }
 
 
@@ -52,41 +53,34 @@ export class TeacherComponent implements OnInit {
   magazineName: any;
   submitted: boolean = false;
   submitted1: boolean = false;
-  classes: any;
+  classes: Class[]=[];
   grades: any;
+  magazinesNames: MagazinesNames[]=[];
 
 
   constructor(private router: Router, private route: ActivatedRoute, private ser: SigninService,
     private _http: HttpClient, private fb: FormBuilder) {
     this.user = ser.user;
+    this.grades = ser.grades;
     if (this.user.auth == "Teacher") {
       this.classes = ser.classes; // for Teacher
-      this.classes.forEach(function (value) {
-        value["magazines"] = ser.magazines[value.grade-1]
-      });          
+      
+      //this.classes.forEach(function (value) {
+      //  value["magazines"] = ser.magazines[value.grade-1]
+      //});          
     }
     else if (this.user.auth == "Student")
       this.magazines = ser.magazines[this.user.grade-1];//<Magazine[]>await this.ser.getMagazines(this.user.grade); //send id from router for Student
   }
-  //async setValues() {
-  //  this.user = this.ser.getUser();
-  //  if (this.user.auth == "Teacher") {
-  //    this.getClasses();
-  //    this.getGrades();
-  //  }
-  //  else if (this.user.auth == "Student")
-  //    this.magazines = <Magazine[]>await this.ser.getMagazines(this.user.grade); //send id from router for Student
-  //}
-  //async getGrades() {
-  //  this.grades = <Grade[]>await this.ser.getGrades();
-  //}
-  //async getClasses() {
-  //  var ser = this.ser;
-  //  this.classes = <Class[]>await this.ser.getClasses(); // for Teacher
-  //  this.classes.forEach(function (value) {
-  //    value["magazines"] = ser.getMagazines(value.grade)
-  //  });
-  //}
+
+  getMagazines(classID) {
+    this.magazinesNames = [];
+    var magIds = this.classes[classID].magazines;
+    for (var i = 0; i < magIds.length; i++) {
+      this.magazinesNames.push({ id: magIds[i], name:this.ser.magazines[magIds[i]].name})
+    }
+  }
+  
   get classFunc() { return this.classForm.controls; }
   get studentFunc() { return this.studentForm.controls; }
   errorMessage: string;
@@ -133,6 +127,10 @@ export class TeacherComponent implements OnInit {
   }
 }
 
+export interface MagazinesNames {
+  id: number;
+  name: string;
+}
 
 const ELEMENT_DATA: PeriodicElement[] = [
   { position: 1, firstName: 'Anna', lastName: 'Carenina', chapter: 75, total: 75 },
