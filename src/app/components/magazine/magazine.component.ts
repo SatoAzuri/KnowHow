@@ -14,7 +14,7 @@ import { User, PeriodicElement, Grade, Magazine, Class, School, Chapter, Assignm
   styleUrls: ['./magazine.component.css']
 })
 export class MagazineComponent implements OnInit {
-  admin: boolean = false;
+  type = true;
   chapters: Chapter[]=[];
   user: any;
   name: any;
@@ -35,10 +35,15 @@ export class MagazineComponent implements OnInit {
   magazineId: any;
   subjects: any;
 
-  chapterForm1 = this.fb.group({
+  isLinear = false;
+  chapterForm = this.fb.group({
     chapterName: ['', Validators.required],
-    chapterType: [null, Validators.required]
-  });  
+    chapterType: ['', Validators.required]
+  });
+  //chapterForm1 = this.fb.group({
+  //  chapterName: ['', Validators.required],
+  //  chapterType: [null, Validators.required]
+  //});  
 
   constructor(private router: Router, private route: ActivatedRoute, private ser: SigninService,
     private _http: HttpClient, private fb: FormBuilder) {
@@ -46,18 +51,47 @@ export class MagazineComponent implements OnInit {
     this.subjects = ser.subjects;
   }
 
-  get f() { return this.chapterForm1.controls; }
+  get f() { return this.chapterForm.controls; }
+  //get f() { return this.chapterForm1.controls; }
 
-  addChapter() {
-    this.submitted = true;
-    if (this.chapterForm1.invalid) {
-      return;
-    }
-    if (this.chapterForm1.valid) {
-      if (this.ser.addChapter(this.magazine.id, this.chapterForm1.value.chapterName, this.chapterForm1.value.chapterType))
-        this.updateMagazine();        
-        this.submitted1 = true;
-    }
+  //addChapter() {
+  //  this.submitted = true;
+  //  if (this.chapterForm1.invalid) {
+  //    return;
+  //  }
+  //  if (this.chapterForm1.valid) {
+  //    if (this.ser.addChapter(this.magazine.id, this.chapterForm1.value.chapterName, this.chapterForm1.value.chapterType))
+  //      this.updateMagazine();        
+  //      this.submitted1 = true;
+  //  }
+  //}
+  //Second step: Content Form
+  addAnother = false;
+  contentForm = this.fb.group({
+    title: ['', Validators.required],
+    content: ['', Validators.required]
+  });
+  get f2() { return this.contentForm.controls; }
+  addContent() {
+  }
+  addAnotherContent() {
+    this.contentForm.reset();
+    this.addAnother = true;
+  }
+  //Third step: Add Assignment
+  //This is for correct answer drop down
+  questionForm = this.fb.group({
+    question: ['', Validators.required],
+    option1: ['', Validators.required],
+    option2: ['', Validators.required],
+    option3: ['', Validators.required],
+    correctAnswer: ['', Validators.required]
+  });
+  get f3() { return this.questionForm.controls; }
+  addQuestion() {
+  }
+  addAnotherQuestion() {
+    this.questionForm.reset();
   }
 
   ngOnInit() {

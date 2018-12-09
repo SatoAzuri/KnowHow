@@ -49,7 +49,7 @@
               Add a new class
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <form [formGroup]="classForm" (ngSubmit)="addClass()" style="margin-bottom:10px;">
+          <form [formGroup]="classForm" (ngSubmit)="addClass()" style="margin-bottom:40px;">
             <mat-form-field class="example-full-width" [ngClass]="{ 'is-invalid': submitted && classFunc.name.errors }">
               <input matInput placeholder="Class Name" formControlName="name">
               <div *ngIf="submitted && classFunc.name.errors" class="error-msg">
@@ -70,7 +70,7 @@
             <div *ngIf="errorMessage" class="error-msg">
               {{errorMessage}}
             </div>
-            <button mat-raised-button color="primary" type="submit">+Add</button>
+            <p style="float:left"><button mat-raised-button color="primary" type="submit">+Add</button></p>
           </form>
         </mat-expansion-panel>
         <mat-expansion-panel *ngFor=" let class of classes">

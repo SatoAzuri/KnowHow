@@ -28,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TeacherComponent } from './components/teacher/teacher.component';
+import { MatStepperModule } from '@angular/material/stepper';
 //import { user } from "./Models";
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { TeacherComponent } from './components/teacher/teacher.component';
     MatTableModule,
     MatSortModule,
     MatButtonModule,
+    MatStepperModule,
     MatCheckboxModule,
     MatInputModule,
     MatCardModule,
