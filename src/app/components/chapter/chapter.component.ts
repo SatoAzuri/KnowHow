@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SigninService } from './../../signin.service';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
@@ -11,6 +11,8 @@ import { HttpClient } from 'selenium-webdriver/http';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { FormGroup, FormControl, Validators, FormBuilder }  from '@angular/forms';
+import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 
 
 @Component({
@@ -18,10 +20,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './chapter.component.html',
   styleUrls: ['./chapter.component.css']
 })
+
+
 export class ChapterComponent implements OnInit {
-  admin: boolean = false;
+  admin: boolean = true;
   fromDB: boolean = true;
   user: any;
+  type = true;
   chapters = [
     {
       id: 1,
@@ -68,12 +73,79 @@ export class ChapterComponent implements OnInit {
   ];
   name: any;
   jsonData: any;
-  constructor(private ser: SigninService, private _http: Http) {
-    this.user = ser.getUser();
+
+//Stepper and Chapter Form
+
+  isLinear = false;
+
+  chapterForm = this.fb.group({
+  chapterName:['', Validators.required],
+  chapterType:['', Validators.required]
+});
+  constructor(private ser: SigninService, private _http: Http, private fb: FormBuilder) {
+    //this.user = ser.getUser();
+
   }
 
   ngOnInit() {
+
   }
+
+  get f() { return this.chapterForm.controls; }
+
+  addChapter(){
+
+  }
+
+//Second step: Content Form
+  addAnother = false;
+  contentForm = this.fb.group({
+  title:['', Validators.required],
+  content:['', Validators.required]
+});
+
+  get f2() { return this.contentForm.controls;}
+
+  addContent(){
+
+  }
+  addAnotherContent(){
+
+
+    this.contentForm.reset();
+    this.addAnother = true;
+
+
+  }
+
+
+  //Third step: Add Assignment
+  //This is for correct answer drop down
+
+  questionForm = this.fb.group({
+  question:['', Validators.required],
+  option1:['', Validators.required],
+  option2:['', Validators.required],
+  option3:['', Validators.required],
+  correctAnswer:['', Validators.required]
+});
+
+
+  get f3() { return this.questionForm.controls;}
+
+
+
+  addQuestion(){
+
+  }
+
+  addAnotherQuestion(){
+    this.questionForm.reset();
+  }
+
+
+
+
   getData() {
     this.ser.getDictonaryData(this.name).subscribe(data => {
       console.log(data);
