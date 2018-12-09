@@ -21,3 +21,11 @@ button {
 .b1 {
   margin: 0px;
 }
+
+.error-msg {
+  display: flex;
+  position: relative;
+  font-size: 75%;
+  bottom: -2em;
+  color: red;
+}

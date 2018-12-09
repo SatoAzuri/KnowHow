@@ -1,47 +1,9 @@
-//import { Component, OnInit } from '@angular/core';
-//import { SigninService } from './../../signin.service';
-//import { Router } from '@angular/router';
-//export interface School {
-//  value: string;
-//  viewValue: string;
-//}
-//@Component({
-//  selector: 'app-signin',
-//  templateUrl: './signin.component.html',
-//  styleUrls: ['./signin.component.css']
-//})
-
-//export class SigninComponent implements OnInit {
-//  constructor(private ser: SigninService, private router: Router) {
-//  }
-//  schools: School[] = [
-//    { value: '0', viewValue: 'PS-140' },
-//    { value: '1', viewValue: 'PS-245' },
-//    { value: '2', viewValue: 'PS-35' }
-//  ];
-//  ngOnInit() {
-
-//  }
-
-//  username: string;
-//  password: string;
-//  signin() {
-//    if (this.ser.setUser(this.schools[0],this.username,this.password)) {
-//      this.router.navigate(['home/',]);
-//    }
-//  }
-//}
-
-
 import { Component, OnInit } from '@angular/core';
 import { SigninService } from './../../signin.service';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
+import { User, PeriodicElement, Grade, Magazine, Class, School } from '../../Models/classes';
 
-export interface School {
-  value: string;
-  viewValue: string;
-}
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -63,8 +25,8 @@ export class SigninComponent implements OnInit {
     { value: '2', viewValue: 'PS-35' }
   ];
   get f() { return this.profileForm.controls; }
-
-  onSubmit() {
+  check: any;
+  async onSubmit() {
     this.submitted = true;
 
     console.warn(this.profileForm.value);
@@ -74,9 +36,11 @@ export class SigninComponent implements OnInit {
     }
 
     if (this.profileForm.valid) {
-
-      if (this.ser.setUser(this.schools[0], this.profileForm.value.name, this.profileForm.value.password)) {
-        this.router.navigate(['home/',]);
+      this.check = await this.ser.setUser(this.schools[0], this.profileForm.value.name, this.profileForm.value.password);
+      if (this.check) {
+        console.log("check is: ", this.check)
+        
+        this.router.navigate(['/home',]);
       }
      
     }

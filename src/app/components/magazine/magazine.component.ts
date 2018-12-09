@@ -5,6 +5,7 @@ import { SigninService } from './../../signin.service';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { User, PeriodicElement, Grade, Magazine, Class, School, Chapter, Assignment, Content } from '../../Models/classes';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class MagazineComponent implements OnInit {
   admin: boolean = false;
-  chapters: any;
+  chapters: Chapter[]=[];
   user: any;
   name: any;
   dictData;
@@ -25,58 +26,55 @@ export class MagazineComponent implements OnInit {
   isAssignment = false;
   submitted1 = false;
   submitted = false;
-
-  //private chapterForm1: FormGroup;
-  chapterForm1 = this.fb.group({
-    chapterName: ['', Validators.required],
-    chapterType: [null, Validators.required]
-  });
-  subjects: Subject[] = [
-    { value: 'Math', viewValue: 'Math' },
-    { value: 'Music', viewValue: 'Music' },
-    { value: 'Science', viewValue: 'Science' }
-  ];
-
-  constructor(private router: Router, private route: ActivatedRoute, private ser: SigninService,
-    private _http: HttpClient, private fb: FormBuilder) {
-    this.user = ser.getUser();
-    this.magazine = ser.getMagazine(0); //send id from router 
-    this.chapters = ser.getChapters(this.magazine.id);
-    this.magazinID = this.magazine.id;
-  }
   magazine: any;
   selectedId: any;
   chapter: any;
   assignment: any;
   magazinID: any;
   chapterID: any;
+  magazineId: any;
+  subjects: any;
+
+  chapterForm1 = this.fb.group({
+    chapterName: ['', Validators.required],
+    chapterType: [null, Validators.required]
+  });  
+
+  constructor(private router: Router, private route: ActivatedRoute, private ser: SigninService,
+    private _http: HttpClient, private fb: FormBuilder) {
+    this.user = ser.user;
+    this.subjects = ser.subjects;
+  }
 
   get f() { return this.chapterForm1.controls; }
 
   addChapter() {
     this.submitted = true;
-
-    //console.warn(this.chapterForm1.value);
-
     if (this.chapterForm1.invalid) {
       return;
     }
-
     if (this.chapterForm1.valid) {
       if (this.ser.addChapter(this.magazine.id, this.chapterForm1.value.chapterName, this.chapterForm1.value.chapterType))
-        this.chapters = this.ser.getChapters(this.magazine.id);
+        this.updateMagazine();        
         this.submitted1 = true;
     }
-
   }
 
-
   ngOnInit() {
+    this.magazineId = this.route.snapshot.paramMap.get('id');
+    this.updateMagazine();
+  }
 
-
-    let id = this.route.snapshot.paramMap.get('id');
-
-    this.magazine = this.ser.getMagazine(id);
+  updateMagazine() {    
+    this.magazine = this.ser.magazines[this.magazineId];
+    var ser = this.ser;
+    for (var i = 0; i < this.magazine.chapters.length; i++) {
+      this.chapters.push(this.ser.chapters[this.magazine.chapters[i]])
+    }
+    //this.magazine.chapters.forEach(function (value) {
+    //  this.chapters.append(ser.chapters[value])
+    //})
+    this.magazinID = this.magazine.id;
   }
 
   changeChapter(id) {
@@ -96,14 +94,9 @@ export class MagazineComponent implements OnInit {
         var objJsonString = JSON.stringify(data);
         var objParsed = JSON.parse(objJsonString);
         this.results = objParsed.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0];
-
       });
-
   }
 }
 
-export interface Subject {
-  value: string;
-  viewValue: string;
-}
+
 

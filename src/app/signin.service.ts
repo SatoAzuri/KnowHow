@@ -7,15 +7,8 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { map } from 'rxjs/operators';
+import { User, PeriodicElement, Grade, Magazine, Class, SchoolSubject, Chapter, Assignment, Content, Score } from './Models/classes';
 
-
-export interface User {
-  id: number;
-  auth: string;
-  name: string;
-  grade: number[];
-  readonly: boolean;
-}
 
 
 @Injectable({
@@ -24,73 +17,107 @@ export interface User {
 
 export class SigninService {
 
-  user: User = {
-    "id": 1,
-    "auth": "Teacher",
-    "name": "Tatiana",
-    "grade": [],
-    "readonly": false
-  };
+  //user = {
+  //  "id": 1,
+  //  "auth": "Teacher",
+  //  "name": "Tatiana",
+  //  "grade": [
+  //    {
+  //      "value": 1,
+  //      "desc": "Grade 1"
+  //    }
+  //  ],
+  //  "readonly": false
+  //};
+  user: User;
   classes = [
     {
-
       "name": "Class 1",
-      "grade":1,
+      "grade":"Grade 1",
       "ID": 0,
-      "magazines": []
-    },
-    {
-
-      "name": "Class 2",
-      "grade": 2,
-      "ID": 1,
-      "magazines": []
-    },
-    {
-
-      "name": "Class 3",
-      "grade":2,
-      "ID": 2,
-      "magazines": []
+      "magazines": [0,1,2]        
     }
   ]
-  magazines = [
+  magazines: Magazine[] = [
     {
-      "grade": 1,
-      "content":
-        [{
           "id": 0,
           "name": "Magazine 1",
-          "pic": "assets/Mag.2.png"
+      "pic": "assets/Mag.2.png",
+          "chapters":[0,1,2,3]
         },
         {
           "id": 1,
           "name": "Magazine 2",
-          "pic": "assets/Mag.1.png"
+          "pic": "assets/Mag.1.png",
+          "chapters": [1,2,3]
         },
         {
           "id": 2,
           "name": "Magazine 3",
-          "pic": "assets/Mag.3.png"
-        }]
-    },
-    {
-      "grade": 2,
-      "content":
-        [{
-          "id": 0,
-          "name": "Magazine 1",
-          "pic": "assets/2.1.jpg"
+          "pic": "assets/Mag.3.png",
+          "chapters": [2,3]
         },
         {
-          "id": 1,
+          "id": 3,
+          "name": "Magazine 1",
+          "pic": "assets/2.1.jpg",
+          "chapters": [1, 2, 3]
+        },
+        {
+          "id": 4,
           "name": "Magazine 2",
-          "pic": "assets/2.2.jpg"
+          "pic": "assets/2.2.jpg",
+          "chapters": [1, 2, 3]
         }
-        ]
+  ]
+  grades: Grade[] = [
+    {
+      "value": 1,
+      "desc": "Grade 1",
+      "magazines":[0,1,2]
+    },
+    {
+      "value": 2,
+      "desc": "Grade 2",
+      "magazines":[3,4]
+    },
+    {
+      "value": 3,
+      "desc": "Grade 3",
+      "magazines": []
+    },
+    {
+      "value": 4,
+      "desc": "Grade 4",
+      "magazines": []
+    },
+    {
+      "value": 5,
+      "desc": "Grade 5",
+      "magazines": []
+    },
+    {
+      "value": 6,
+      "desc": "Grade 6",
+      "magazines": []
+    },
+    {
+      "value": 7,
+      "desc": "Grade 7",
+      "magazines": []
+    },
+    {
+      "value": 8,
+      "desc": "Grade 8",
+      "magazines": []
+    },
+    {
+      "value": 9,
+      "desc": "Grade 9",
+      "magazines": []
     }
   ]
-  chapters = [
+  chapters: Chapter[] = [
     {
       id: 0,
       name: "Chapter1",
@@ -111,7 +138,7 @@ export class SigninService {
           video: "<iframe style='width: 50 %; float: left; height: 255px' src='https://www.youtube.com/embed/yxAIBFsRpqU' frameborder = '0' allow='autoplay; encrypted-media' allowfullscreen> </iframe>"
         }
       ],
-      assignment: [
+      assignment: <Assignment[]>[
         {
           question: "What is math?",
           pic: "",
@@ -152,7 +179,7 @@ export class SigninService {
           video: "<iframe style='width: 50 %; float: left; height: 255px' src='https://www.youtube.com/embed/yxAIBFsRpqU' frameborder = '0' allow='autoplay; encrypted-media' allowfullscreen> </iframe>"
         },
       ],
-      assignment: [
+      assignment: <Assignment[]> [
         {
           question: "What is math?",
           pic: "",
@@ -194,7 +221,7 @@ export class SigninService {
           video: "<iframe style='width: 50 %; float: left; height: 255px' src='https://www.youtube.com/embed/yxAIBFsRpqU' frameborder = '0' allow='autoplay; encrypted-media' allowfullscreen> </iframe>"
         }
       ],
-      assignment: [
+      assignment: <Assignment[]>[
         {
           question: "What is math?",
           pic: "",
@@ -236,7 +263,7 @@ export class SigninService {
           video: "<iframe style='width: 50 %; float: left; height: 255px' src='https://www.youtube.com/embed/yxAIBFsRpqU' frameborder = '0' allow='autoplay; encrypted-media' allowfullscreen> </iframe>"
         }
       ],
-      assignment: [
+      assignment: <Assignment[]>[
         {
           question: "What is math?",
           pic: "",
@@ -247,7 +274,7 @@ export class SigninService {
           question: "What is drawing?",
           pic: "",
           options: ["Science", "Art", "School"],
-          answer: "Science"
+          answer: "Art"
         },
         {
           question: "What is Apple?",
@@ -259,26 +286,36 @@ export class SigninService {
       ]
     },
   ];
+  subjects: SchoolSubject[] = [
+    { value: 'Math', viewValue: 'Math' },
+    { value: 'Music', viewValue: 'Music' },
+    { value: 'Science', viewValue: 'Science' }
+  ];
   users = [
     {      
         "id": 1,
         "auth": "Teacher",
-        "name": "Tatiana",
-        "grade": [],
+      "name": "Tatiana",
+      "grades": this.grades,
         "readonly": false      
     },
     {
       "id": 2,
       "auth": "Student",
       "name": "Jessica",
-      "grade": [1],
+      "grades": <Grade[]>[
+        {
+          "value": 1,
+          "desc": "Grade 1"
+        }
+      ],
       "readonly": false
     },
     {
       "id": 3,
       "auth": "Admin",
       "name": "Natalia",
-      "grade": [],
+      "grades": this.grades,
       "readonly": false
     }
   ];
@@ -299,70 +336,87 @@ export class SigninService {
       "id": 3
     }
   ];
-  scores = [
+  scores: Score[] =  [
     {
       "scoreID":0,
       "studentID": 2,
       "magazineID": 1,
-      "chapterID": 1,
-      "answer0": "yes",
-      "answer1": "yes",
-      "answer2": "yes",
+      "chapterID": 1,     
       "score":75
-
     }
   ];
   magazines_pic: string[][] = [["assets/1.1.jpg", "assets/1.2.jpg", "assets/1.3.jpg"], ["assets/2.1.jpg", "assets/2.2.jpg"]];
 
 
   getClasses() {
-    return this.classes;
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(this.classes);
+      }, 2000);
+    });    
   }
-  addClass(name, grade):boolean {
+  addClass(name, grade): boolean {
+    var gr = this.grades[grade - 1].desc;
     this.classes.push(
       {
         "name": name,
-        "grade": grade,
+        "grade": gr,
         "ID": this.classes.length,
-        "magazines": this.getMagazines(grade)
+        "magazines": this.getMagazinesForClass(grade)
       }
     );
 
     return true;
   }
-  getMagazines(grade) {
-    var mags = this.magazines[grade-1].content;
+  getMagazinesForClass(grade) {
+    var mags = this.grades[grade-1].magazines;
     return mags;
+  }
+  getMagazines(grade) {
+    var mags = this.magazines[grade - 1];
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(mags);
+      }, 2000);
+    });
   }
   getChapters(id) {
     return this.chapters;
   }
   getMagazine(id) {
-    var mag = this.magazines[0].content[0];
+    var mag = this.magazines[id];
     return mag;
   }
-  getGrades() {
-    return [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  getGrades(gr: number[] = []) {
+    if (gr.length > 0) {
+
+    }
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(this.grades);
+      }, 2000);
+    });
+   
   }
   getUser() {
-    return this.user;
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(this.user);
+      }, 2000);
+    });
   }
   setAnswer(magazinID, chapterID, answer0, answer1, answer2, score):boolean {
    let newScore = {
       "scoreID": this.scores.length,
       "studentID": this.user.id,
       "magazineID": magazinID,
-      "chapterID": chapterID,
-      "answer0": answer0,
-      "answer1": answer1,
-      "answer2": answer2,
+      "chapterID": chapterID,   
       "score": score
     }
     this.scores.push(newScore);
 
     return true;
   }
-
   addChapter(magazineid, name, subject): boolean {
     this.chapters.push(
       {
@@ -373,13 +427,13 @@ export class SigninService {
         "assignment":[]
       }
     )
+    this.magazines[magazineid].chapters.push(this.chapters.length);
     return true;
   }
-  setUser(school, username, password): boolean {
+  setUser(school, username, password) {
     var id = null;
     var user = null;
-    //this.user = new User;
-    //var user = User; // = new User();
+    this.user = null;    
     this.auth.forEach(function (value) {
       if (value.username == username && value.password == password) {
         id = value.id;
@@ -393,11 +447,13 @@ export class SigninService {
       });
     }
     if (user) {
-      this.user = user;
-      return true;
+      this.user = <User>user;           
     }
-    this.user = null;    
-    return false;
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(this.user);
+      }, 2000);
+    });
   }
 
   //  word: String = "aardvark";

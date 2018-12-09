@@ -23,7 +23,7 @@ import { HttpModule } from '@angular/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material';
-
+import { MenuComponent } from './components/menu/menu.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -32,6 +32,7 @@ import { TeacherComponent } from './components/teacher/teacher.component';
 @NgModule({
   declarations: [
     AppComponent,
+    MenuComponent,
     LogincomponentComponent,
     AboutUsComponent,
     ContactUsComponent,

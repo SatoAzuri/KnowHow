@@ -1,34 +1,36 @@
+<app-menu [user]="user"></app-menu>
+<div class="jumbotron">
+
+  <mat-card id="card" style=" background-image: url('assets/knowledge.jpg'); background-repeat: no-repeat;background-size: 100%;">
+    <mat-card-header>
+      <mat-card-title style="font-size:30px; text-align:center;">
+        Welcome to Know-How<i *ngIf="user">, {{user.name}}</i>
+      </mat-card-title>
 
 
-<mat-card id="card" style=" background-image: url('assets/knowledge.jpg'); background-repeat: no-repeat;background-size: 100%;">
-  <mat-card-header>
-    <mat-card-title style="font-size:30px; text-align:center;">
-      Know-How
-    </mat-card-title>
+      <mat-card-subtitle style="text-align:center;">
+        Engage.Motivate.Inspire
+      </mat-card-subtitle>
+    </mat-card-header>
+    {{test}}
+    <mat-card-content *ngIf="user" style="display:inline-flex; overflow:auto; width:100%">
+      <div class="grade" *ngFor="let grade of user.grades" (click)="ChangeGrade(grade.value)">
+        <span>{{grade.value}}</span>
+      </div>
+    </mat-card-content>
 
+  </mat-card>
 
-    <mat-card-subtitle style="text-align:center;">
-      Engage.Motivate.Inspire
-    </mat-card-subtitle>
-  </mat-card-header>
-  {{test}}
-  <mat-card-content [hidden]="!gatData" style="display:inline-flex; overflow:auto; width:100%">    
-    <div class="grade" *ngFor="let grade of grades" (click)="ChangeGrade(grade)">
-      <span>{{grade}}</span>
-    </div>
-  </mat-card-content>
+  <!--<mat-tab-group >
+    <mat-tab *ngFor="let grade of grades" label="grade" (click)="ChangeGrade(grade)">
+      <i [hidden]="!ifgradeclicked">{{grade}}</i> <img *ngFor="let magazine of magazines.content|async" [src]=magazine.pic class="magazine-cover" (click)="OpenMagazine(magazine.id)" />
+    </mat-tab>
+   </mat-tab-group>-->
 
-</mat-card>
-
-<!--<mat-tab-group >
-  <mat-tab *ngFor="let grade of grades" label="grade" (click)="ChangeGrade(grade)">
-    <i [hidden]="!ifgradeclicked">{{grade}}</i> <img *ngFor="let magazine of magazines.content|async" [src]=magazine.pic class="magazine-cover" (click)="OpenMagazine(magazine.id)" />
-  </mat-tab>
- </mat-tab-group>-->
-
-<mat-card [hidden]="!ifgradeclicked">
-  <mat-card-content>
-    <img *ngFor="let magazine of magazines.content" [src]=magazine.pic class="magazine-cover" (click)="OpenMagazine(magazine.id)"/>
-  </mat-card-content>
-  <div class="error-msg">{{errorMessage}}</div>
-</mat-card>
+  <mat-card *ngIf="ifgradeclicked">
+    <mat-card-content>
+      <img *ngFor="let magazine of magazines" [src]=magazine.pic class="magazine-cover" (click)="OpenMagazine(magazine.id)" />
+    </mat-card-content>
+    <div class="error-msg">{{errorMessage}}</div>
+  </mat-card>
+</div>

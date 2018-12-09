@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SigninService } from './../../signin.service';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
+import { User, PeriodicElement, Grade, Magazine, Class, School } from '../../Models/classes';
 
 @Component({
   selector: 'app-assignment',

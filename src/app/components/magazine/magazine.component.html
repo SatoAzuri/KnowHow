@@ -1,103 +1,106 @@
-<div *ngIf="user">
-  <mat-card style="padding-bottom:10px">
-    <mat-card-title>
-      <h1 style="text-align:center; font-family: 'Mali', cursive;"> {{magazine.name}}</h1>
-    </mat-card-title>
-  </mat-card>
-  <div style="background-color:lightblue; width: auto; height: -webkit-fill-available; margin-bottom: 8%;">
+<app-menu [user]="user"></app-menu>
+<div class="jumbotron">
 
-    <div style="width: 30%;  padding:1%; float:left;">
+  <div *ngIf="user">
+    <mat-card style="padding-bottom:10px">
+      <mat-card-title>
+        <h1 style="text-align:center; font-family: 'Mali', cursive;"> {{magazine.name}}</h1>
+      </mat-card-title>
+    </mat-card>
+    <div style="background-color:lightblue; width: auto; height: -webkit-fill-available; margin-bottom: 8%;">
 
-      <mat-accordion multi="false">
-        <mat-expansion-panel *ngIf="user.auth != 'Admin'">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Dictionary
-            </mat-panel-title>
-            <mat-panel-description>
+      <div style="width: 30%;  padding:1%; float:left;">
 
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <span>
-            <input id="name" type="text" [(ngModel)]="name" />
-            <button (click)="getData()">Definition </button>
-            <br />
-            <label>{{results}}</label>
-          </span>
-        </mat-expansion-panel>
-        <mat-expansion-panel *ngIf="user.auth == 'Admin'">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Add Chapter +
-            </mat-panel-title>
-            <mat-panel-description>
-            </mat-panel-description>
-          </mat-expansion-panel-header>         
-        </mat-expansion-panel>
-        <mat-expansion-panel *ngFor="let chapter of chapters">
-          <mat-expansion-panel-header>
-            <mat-panel-title (click)="changeChapter(chapter.id)">
-              {{chapter.name}}
-            </mat-panel-title>
-            <mat-panel-description>
-              {{chapter.type}}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <ul>
-            <li *ngFor="let item of chapter.content">{{item.title}}</li>
-            <li (click)="changeAssignment(chapter.id)">Assignment</li>
-          </ul>
-        </mat-expansion-panel>
-      </mat-accordion>
+        <mat-accordion multi="false">
+          <mat-expansion-panel *ngIf="user.auth != 'Admin'">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Dictionary
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <span>
+              <input id="name" type="text" [(ngModel)]="name" />
+              <button (click)="getData()">Definition </button>
+              <br />
+              <label>{{results}}</label>
+            </span>
+          </mat-expansion-panel>
+          <mat-expansion-panel *ngIf="user.auth == 'Admin'">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Add Chapter +
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+          <mat-expansion-panel *ngFor="let chapter of chapters">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{chapter.name}}
+              </mat-panel-title>
+              <mat-panel-description>
+                {{chapter.type}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ol>
+              <li (click)="changeChapter(chapter.id)">Content</li>
+              <li (click)="changeAssignment(chapter.id)">Assignment</li>
+            </ol>
+          </mat-expansion-panel>
+        </mat-accordion>
 
 
 
-    </div>
-    <div style="width: 70%;  padding:1%; float:left;">
-      <mat-card style="background-color:white;overflow-y: scroll;height: -webkit-fill-available;">
+      </div>
+      <div style="width: 70%;  padding:1%; float:left;">
+        <mat-card style="background-color:white;overflow-y: scroll;height: -webkit-fill-available;">
 
-        <app-chapter *ngIf="!isAssignment && user.auth != 'Admin'" [chapter]="chapter"></app-chapter>
+          <app-chapter *ngIf="!isAssignment && user.auth != 'Admin'" [chapter]="chapter"></app-chapter>
 
-        <app-assignment *ngIf="isAssignment && user.auth != 'Admin'" [assignment]="assignment" [user]="user" [magazinID]="magazinID" [chapterID]="chapterID"></app-assignment>
+          <app-assignment *ngIf="isAssignment && user.auth != 'Admin'" [assignment]="assignment" [user]="user" [magazinID]="magazinID" [chapterID]="chapterID"></app-assignment>
 
-        <div class="container" *ngIf="user.auth=='Admin'">
-          <mat-card>
-            <mat-card-title>
-              Please Enter Chapter Name and Subject!
-            </mat-card-title>
-            <form [formGroup]="chapterForm1" (ngSubmit)="onSubmit()">
+          <div class="container" *ngIf="user.auth=='Admin'">
+            <mat-card>
+              <mat-card-title>
+                Please Enter Chapter Name and Subject!
+              </mat-card-title>
+              <form [formGroup]="chapterForm1" (ngSubmit)="onSubmit()">
 
-              <div class="example-container">
-                <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.chapterName.errors }">
-                  <input matInput placeholder="Chapter Name" type="text" formControlName="chapterName">
-                  <div *ngIf="submitted && f.chapterName.errors" class="error-msg">
-                    <div *ngIf="f.chapterName.errors.required">Chapter Name is required.</div>
-                  </div>
-                </mat-form-field>
-                <br />
-                <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.chapterType.errors }">
-                  <mat-select placeholder="Chapter Subject" formControlName="chapterType">
-                    <mat-option *ngFor="let subject of subjects" [value]="subject.value">
-                      {{subject.viewValue}}
-                    </mat-option>
-                  </mat-select>
-                  <div *ngIf="submitted && f.chapterType.errors" class="error-msg">
-                    <div *ngIf="f.chapterType.errors.required">Chapter type is required.</div>
-                  </div>
-                </mat-form-field>
+                <div class="example-container">
+                  <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.chapterName.errors }">
+                    <input matInput placeholder="Chapter Name" type="text" formControlName="chapterName">
+                    <div *ngIf="submitted && f.chapterName.errors" class="error-msg">
+                      <div *ngIf="f.chapterName.errors.required">Chapter Name is required.</div>
+                    </div>
+                  </mat-form-field>
+                  <br />
+                  <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.chapterType.errors }">
+                    <mat-select placeholder="Chapter Subject" formControlName="chapterType">
+                      <mat-option *ngFor="let subject of subjects" [value]="subject.value">
+                        {{subject.viewValue}}
+                      </mat-option>
+                    </mat-select>
+                    <div *ngIf="submitted && f.chapterType.errors" class="error-msg">
+                      <div *ngIf="f.chapterType.errors.required">Chapter type is required.</div>
+                    </div>
+                  </mat-form-field>
 
-              </div>
+                </div>
 
-              <button mat-raised-button type="submit" color="primary" [disabled]="loading" (click)="addChapter()">Add Chapter</button>
+                <button mat-raised-button type="submit" color="primary" [disabled]="loading" (click)="addChapter()">Add Chapter</button>
 
-            </form>
+              </form>
 
-          </mat-card>
+            </mat-card>
           </div>
-      </mat-card>
+        </mat-card>
+      </div>
     </div>
   </div>
-</div>
-<div *ngIf="!user" style="text-align:center">
-  Please sign in to see the content of magazine
+  <div *ngIf="!user" style="text-align:center">
+    Please sign in to see the content of magazine
+  </div>
 </div>
