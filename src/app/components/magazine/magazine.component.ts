@@ -10,12 +10,12 @@ import { SigninService } from './../../signin.service';
   styleUrls: ['./magazine.component.css']
 })
 export class MagazineComponent implements OnInit {
-  admin: boolean = false;
+  admin: boolean = true;
   chapters: any;
   user: any;
   constructor(private router: Router, private route: ActivatedRoute, private ser: SigninService) {
     this.user = ser.getUser();
-    this.magazine = ser.getMagazine(0); //send id from router 
+    this.magazine = ser.getMagazine(0); //send id from router
     this.chapters = ser.getChapters(this.magazine.id);
   }
   magazine: any;

@@ -30,17 +30,29 @@ export class SigninComponent implements OnInit {
   ];
 
 
+  get f() { return this.profileForm.controls; }
 
+  onSubmit(){
+    this.submitted = true;
+
+    console.warn(this.profileForm.value);
+
+    if (this.profileForm.invalid) {
+            return;
+        }
+
+    if(this.profileForm.valid){
+      this.ser.setSignin(true);
+      this.router.navigate(['home/', ]);
+    }
+
+  }
   ngOnInit() {
 
   }
 
   username: string;
   password: string;
-  signin() {
-    if (this.ser.setUser(this.schools[0],this.username,this.password)) {
-      this.router.navigate(['home/',]);
-    }
 
   }
 }

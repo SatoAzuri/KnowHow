@@ -23,6 +23,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatStepperModule } from '@angular/material/stepper';
 //import { user } from "./Models";
 
 @NgModule({
@@ -56,6 +57,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
+    MatStepperModule,
     RouterModule.forRoot([
       {
         path: 'contact-us',
