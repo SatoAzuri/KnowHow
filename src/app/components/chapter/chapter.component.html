@@ -65,7 +65,7 @@
 <!--/div-->
 <div *ngIf="user" class="container">
   <div *ngFor="let content of chapter.content" class="container">
-    <h3>{{content.title}}</h3>
+    <h3>{{content.name}}</h3>
     <p id="left">{{content.content}}</p>
     <img id="pic" [src]="content.pic" />
     <iframe style="width:50%; float:left;height:255px" src="https://www.youtube.com/embed/yxAIBFsRpqU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>

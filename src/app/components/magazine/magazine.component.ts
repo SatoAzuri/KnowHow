@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { User, PeriodicElement, Grade, Magazine, Class, School, Chapter, Assignment, Content } from '../../Models/classes';
+import { MatStepper } from '@angular/material';
 
 
 @Component({
@@ -38,7 +39,7 @@ export class MagazineComponent implements OnInit {
   isLinear = false;
   chapterForm = this.fb.group({
     chapterName: ['', Validators.required],
-    chapterType: ['', Validators.required]
+    chapterType: [null, Validators.required]
   });
   //chapterForm1 = this.fb.group({
   //  chapterName: ['', Validators.required],
@@ -53,30 +54,60 @@ export class MagazineComponent implements OnInit {
 
   get f() { return this.chapterForm.controls; }
   //get f() { return this.chapterForm1.controls; }
-
-  //addChapter() {
-  //  this.submitted = true;
-  //  if (this.chapterForm1.invalid) {
-  //    return;
-  //  }
-  //  if (this.chapterForm1.valid) {
-  //    if (this.ser.addChapter(this.magazine.id, this.chapterForm1.value.chapterName, this.chapterForm1.value.chapterType))
-  //      this.updateMagazine();        
-  //      this.submitted1 = true;
-  //  }
-  //}
+  newChapterID: number;
+  addChapter(stepper: MatStepper) {    
+    if (this.chapterForm.invalid) {
+      return;
+    }
+    if (this.chapterForm.valid) {
+      if (this.ifUnique(this.chapterForm.value.chapterName, this.chapters)) {
+        this.chapterUnique = true;
+        this.newChapterID = this.ser.addChapter(this.magazine.id, this.chapterForm.value.chapterName, this.chapterForm.value.chapterType);
+        this.updateMagazine();
+        this.errorMessage = "";
+        stepper.next();
+      }
+      else {
+        this.chapterUnique = false;
+        this.errorMessage = "Name should be unique";
+      }
+    }
+  }
   //Second step: Content Form
   addAnother = false;
   contentForm = this.fb.group({
     title: ['', Validators.required],
-    content: ['', Validators.required]
+    content: ['', Validators.required],
+    img: ['']
   });
   get f2() { return this.contentForm.controls; }
-  addContent() {
-  }
-  addAnotherContent() {
-    this.contentForm.reset();
-    this.addAnother = true;
+
+  errorMessage: string;
+  chapterUnique: boolean = false;
+
+  addContent(v: boolean, stepper: MatStepper) {
+    this.addAnother = v;      
+
+    if (this.contentForm.valid) {
+      if (this.ifUnique(this.contentForm.value.title, this.chapters[this.newChapterID].content)) {
+        this.errorMessage = "";
+        if (this.ser.addContent(this.newChapterID, this.contentForm.value.title, this.contentForm.value.content, "", "")) {
+          this.updateMagazine();
+          if(!v)
+            stepper.next();
+        }
+      }
+      else {
+        this.errorMessage = "Name should be unique.";
+        this.contentForm.value.title = "";
+      }
+    }
+
+      if (this.addAnother) {
+        this.contentForm.reset();
+      }
+    
+    
   }
   //Third step: Add Assignment
   //This is for correct answer drop down
@@ -88,7 +119,28 @@ export class MagazineComponent implements OnInit {
     correctAnswer: ['', Validators.required]
   });
   get f3() { return this.questionForm.controls; }
-  addQuestion() {
+  addQuestion(v: boolean, stepper: MatStepper) {
+    this.addAnother = v;      
+
+    if (this.questionForm.valid) {
+      if (this.ifUniqueAssignment(this.questionForm.value.question, this.chapters[this.newChapterID].assignment)) {
+        this.errorMessage = "";
+        if (this.ser.addAssignment(this.newChapterID, this.questionForm.value.question, this.questionForm.value.option1, this.questionForm.value.option2, this.questionForm.value.option3, this.questionForm.value.correctAnswer, "")) {
+          this.updateMagazine();
+          if(!v)
+            stepper.next();
+        }
+      }
+      else {
+        this.errorMessage = "Question should be unique.";
+        this.questionForm.value.question = "";
+      }
+    }
+
+      if (this.addAnother) {
+        this.questionForm.reset();
+      }
+    
   }
   addAnotherQuestion() {
     this.questionForm.reset();
@@ -98,10 +150,37 @@ export class MagazineComponent implements OnInit {
     this.magazineId = this.route.snapshot.paramMap.get('id');
     this.updateMagazine();
   }
+  ifUnique(name: string, elements: any): boolean {
+    var keepGoing = true;
+    elements.forEach(function (value) {
+      if (keepGoing) {
+        if (value.name == name)
+          keepGoing = false;
+      }
+    });
+    if (keepGoing)
+      return true;
+    else
+      return false;
+  }
+  ifUniqueAssignment(question: string, elements: any): boolean {
+    var keepGoing = true;
+    elements.forEach(function (value) {
+      if (keepGoing) {
+        if (value.question == question)
+          keepGoing = false;
+      }
+    });
+    if (keepGoing)
+      return true;
+    else
+      return false;
+  }
 
-  updateMagazine() {    
+
+  updateMagazine() {
+    this.chapters = [];
     this.magazine = this.ser.magazines[this.magazineId];
-    var ser = this.ser;
     for (var i = 0; i < this.magazine.chapters.length; i++) {
       this.chapters.push(this.ser.chapters[this.magazine.chapters[i]])
     }

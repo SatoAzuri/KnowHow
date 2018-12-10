@@ -73,11 +73,13 @@ export class Score {
   }
 }
 export class Assignment {
+  id: number;
   question: string;
   pic: string;
   options: string[];
   answer: string;
-  constructor(x: string, y: string, z: string[], v: string) {
+  constructor(i: number, x: string, y: string, z: string[], v: string) {
+    this.id = i;
     this.question = x;
     this.pic = y;
     this.options = z;
@@ -86,13 +88,13 @@ export class Assignment {
 }
 export class Content {
   id: number;
-  title: string;
+  name: string;
   content: string;
   pic: string;
   video: string;
   constructor(x: number, y: string, z: string, v: string, b: string) {
     this.id = x;
-    this.title = y;
+    this.name = y;
     this.content = z;
     this.pic = v;
     this.video = b;

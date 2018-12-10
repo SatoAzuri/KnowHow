@@ -64,9 +64,10 @@
 
           <div class="container" *ngIf="user.auth=='Admin'">
             <mat-vertical-stepper [linear]="!isLinear" #stepper>
-              <mat-step [stepControl]="chapterForm">
-                <form [formGroup]="chapterForm" (ngSubmit)="addChapter()">
+              <mat-step [stepControl]="chapterForm" [editable]="false" [completed]="chapterUnique">
+                <form [formGroup]="chapterForm" (ngSubmit)="addChapter(stepper)">
                   <ng-template matStepLabel>Fill out chapter information</ng-template>
+
                   <div class="example-container">
 
                     <mat-form-field [ngClass]="{ 'is-invalid': f.chapterName.errors }">
@@ -78,24 +79,31 @@
 
                     <br />
 
-                    <mat-form-field [ngClass]="{ 'is-invalid': f.chapterType.errors }">
-                      <input matInput placeholder="Chapter Type" type="text" formControlName="chapterType">
+                    <mat-form-field id="form" [ngClass]="{ 'is-invalid': f.chapterType.errors }">
+                      <mat-select placeholder="Chapter Subject" formControlName="chapterType">
+                        <mat-option *ngFor="let subject of subjects" [value]="subject.value">
+                          {{subject.viewValue}}
+                        </mat-option>
+                      </mat-select>
                       <div *ngIf="f.chapterType.errors" class="error-msg">
-                        <div *ngIf="f.chapterType.errors.required">Chapter Type is required.</div>
+                        <div *ngIf="f.chapterType.errors.required">Chapter type is required.</div>
                       </div>
                     </mat-form-field>
                     <br />
-                    <button mat-button matStepperNext>Next</button>
-                    Form Value: {{ chapterForm.value | json }}
-                    <p>
-                      Form Status: {{ chapterForm.status }}
-                    </p>
-                  </div>
-                </form>
+                    <div class="error-msg">{{errorMessage}}</div>
+
+                      <br />
+                      <button mat-button type="submit">Next</button>
+                      <!--Form Value: {{ chapterForm.value | json }}
+                      <p>
+                        Form Status: {{ chapterForm.status }}
+                      </p>-->
+                    </div>
+</form>
               </mat-step>
 
-              <mat-step [stepControl]="contentForm">
-                <form [formGroup]="contentForm" (ngSubmit)="addContent()">
+              <mat-step [stepControl]="contentForm" [editable]="false">
+                <form [formGroup]="contentForm" (ngSubmit)="addContent(0, stepper)">
                   <ng-template matStepLabel>Fill out your content for chapter</ng-template>
                   <div class="example-container">
                     <br />
@@ -123,21 +131,24 @@
                     <input type="file" ng-model="vm.uploadme" />
                   </div>
                   <br />
+                  <div class="error-msg">{{errorMessage}}</div>
+
+                  <br />
                   <div>
-                    <button mat-button matStepperPrevious [disabled]="addAnother">Back</button>
-                    <button mat-button (click)="addAnotherContent()">+ Another Content</button>
-                    <button mat-button matStepperNext>Next</button>
-                    <p>
-                      Form Value: {{ contentForm.value | json }}
-                    </p>
-                    <p>
-                      Form Status: {{ contentForm.status }}
-                    </p>
+                    <!--<button mat-button matStepperPrevious [disabled]="addAnother">Back</button>-->
+                    <button mat-button (click)="addContent(1, stepper)">Add Another</button>
+                    <button mat-button type="submit">Next</button>
+                    <!--<p>
+      Form Value: {{ contentForm.value | json }}
+    </p>
+    <p>
+      Form Status: {{ contentForm.status }}
+    </p>-->
                   </div>
                 </form>
               </mat-step>
-              <mat-step [stepControl]="questionForm">
-                <form [formGroup]="questionForm" (ngSubmit)="addQuestion()">
+              <mat-step [stepControl]="questionForm" [editable]="false">
+                <form [formGroup]="questionForm" (ngSubmit)="addQuestion(0,stepper)">
                   <ng-template matStepLabel>Add Assignment</ng-template>
                   <div class="example-container">
                     <mat-form-field [ngClass]="{ 'is-invalid': f3.question.errors }">
@@ -155,14 +166,14 @@
                         <div *ngIf="f3.option1.errors.required">Option1 is required.</div>
                       </div>
                     </mat-form-field>
-
+                    <br />
                     <mat-form-field [ngClass]="{ 'is-invalid': f3.option2.errors }">
                       <textarea matInput placeholder="Option2" formControlName="option2"></textarea>
                       <div *ngIf="f3.option2.errors" class="error-msg">
                         <div *ngIf="f3.option2.errors.required">Option2 is required.</div>
                       </div>
                     </mat-form-field>
-
+                    <br />
                     <mat-form-field [ngClass]="{ 'is-invalid': f3.option3.errors }">
                       <textarea matInput placeholder="Option3" formControlName="option3"></textarea>
                       <div *ngIf="f3.option3.errors" class="error-msg">
@@ -172,42 +183,40 @@
 
                     <br />
 
-
-
                     <mat-form-field [ngClass]="{ 'is-invalid': f3.correctAnswer.errors }">
                       <mat-select placeholder="Choose Correct Answer" formControlName="correctAnswer">
-                        <mat-option value="option1">{{f3.option1.value}}</mat-option>
-                        <mat-option value="option2">{{f3.option2.value}}</mat-option>
-                        <mat-option value="option3">{{f3.option3.value}}</mat-option>
+                        <mat-option value="f3.option1.value">{{f3.option1.value}}</mat-option>
+                        <mat-option value="f3.option2.value">{{f3.option2.value}}</mat-option>
+                        <mat-option value="f3.option3.value">{{f3.option3.value}}</mat-option>
                       </mat-select>
                       <div *ngIf="f3.correctAnswer.errors" class="error-msg">
                         <div *ngIf="f3.correctAnswer.errors.required">Correct Answer is required.</div>
                       </div>
                     </mat-form-field>
-
                     <br />
-
                     <div>
                       If any photo, video or files to add:
                     </div>
                     <input type="file" />
                   </div>
                   <br />
-                  <button mat-button matStepperPrevious>Back</button>
-                  <button mat-button (click)="addAnotherQuestion()">+ Another Question</button>
-                  <button mat-button matStepperNext>Next</button>
-                  Form Value: {{ questionForm.value | json }}
+                  <div class="error-msg">{{errorMessage}}</div>
 
-                  <p>
-                    Form Status: {{ questionForm.status }}
-                  </p>
+                  <br />
+                  <!--<button mat-button matStepperPrevious>Back</button>-->
+                  <button mat-button (click)="addQuestion(1,stepper)">+ Add Question</button>
+                  <button mat-button type="submit">Next</button>
+                  <!--Form Value: {{ questionForm.value | json }}
+
+  <p>
+    Form Status: {{ questionForm.status }}
+  </p>-->
                 </form>
               </mat-step>
               <mat-step>
                 <ng-template matStepLabel>Done</ng-template>
-                You are now done.
-                <div>
-                  <button mat-button matStepperPrevious>Back</button>
+                You successfuly added a new Chapter with content and assignment
+                <div>                  
                   <button mat-button (click)="stepper.reset()">Want to add Another Chapter</button>
                 </div>
               </mat-step>

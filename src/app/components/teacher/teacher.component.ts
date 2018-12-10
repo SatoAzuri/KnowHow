@@ -25,10 +25,9 @@ export class TeacherComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
-
     this.dataSource.paginator = this.paginator;
-
   }
+
   accessStudents(id, mag) {
     this.curClass = id;
     this.curMag = mag.name;
@@ -40,8 +39,6 @@ export class TeacherComponent implements OnInit {
     name: ['', Validators.required],
     grade: [null, Validators.required]
   });
-
-
 
   studentForm = this.fb.group({
     email: ['', Validators.required],
@@ -60,17 +57,20 @@ export class TeacherComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private ser: SigninService,
     private _http: HttpClient, private fb: FormBuilder) {
-    this.user = ser.user;
+    this.user = <User>ser.user;
     this.grades = ser.grades;
     if (this.user.auth == "Teacher") {
       this.classes = ser.classes; // for Teacher
-      
+
       //this.classes.forEach(function (value) {
       //  value["magazines"] = ser.magazines[value.grade-1]
       //});          
     }
-    else if (this.user.auth == "Student")
-      this.magazines = ser.magazines[this.user.grade-1];//<Magazine[]>await this.ser.getMagazines(this.user.grade); //send id from router for Student
+    else if (this.user.auth == "Student") {
+      var magIds = this.user.grades[0].magazines;
+      for (var i = 0; i < magIds.length;i++)
+        this.magazines.append(ser.magazines[i]);//<Magazine[]>await this.ser.getMagazines(this.user.grade); //send id from router for Student
+    }
   }
 
   getMagazines(classID) {
