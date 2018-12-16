@@ -37,6 +37,7 @@
           </mat-form-field>
 
         </div>
+        <div style="text-align:center" class="error-msg">{{errorMessage}}</div>
         <button mat-raised-button id="form" type="submit" [disabled]="loading" color="primary" (click)="onSubmit()">Sign in</button>
 
       </mat-card>
@@ -49,11 +50,11 @@
 
 
   </form>
-  <p>
+  <!--<p>
     Form Value: {{ profileForm.value | json }}
   </p>
 
   <p>
     Form Status: {{ profileForm.status }}
-  </p>
+  </p>-->
 </div>

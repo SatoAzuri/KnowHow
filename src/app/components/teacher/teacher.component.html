@@ -1,4 +1,4 @@
-<app-menu  [user]="user"></app-menu>
+<app-menu [user]="user"></app-menu>
 <div class="jumbotron">
 
   <div *ngIf="user.auth == 'Student'">
@@ -11,22 +11,35 @@
       <mat-accordion>
         <mat-expansion-panel *ngFor=" let mag of magazines">
           <mat-expansion-panel-header>
-            <mat-panel-title style="font-family: 'Mali', cursive;" (click)="changeMagazine(mag.content.id)">
-              {{mag.content.name}}
+            <mat-panel-title style="font-family: 'Mali', cursive;" (click)="changeMagazine(mag.id)">
+              {{mag.name}}
             </mat-panel-title>
           </mat-expansion-panel-header>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
-    <div [hidden]="!chapters" style="width: 70%; background-color:lightblue; padding:1%; float:left">
+    <div *ngIf="isScore" style="width: 70%; background-color:lightblue; padding:1%; float:left">
       <mat-card style="background-color:white; overflow:-webkit-paged-x;font-family: 'Mali', cursive;">
         <p style="text-align:center">
           {{magazineName}}
         </p>
         <!--Table goes below-->
-        <table>
-          <thead></thead>
+        <table mat-table [dataSource]="haha" class="mat-elevation-z8">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Chapter Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="score">
+            <th mat-header-cell *matHeaderCellDef> Score </th>
+            <td mat-cell *matCellDef="let element"> {{element.score}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
         </table>
+        <br />
+        <div style="text-align:center"><h4>Total score for this magazine: <b>{{totalScore | number : '1.1-1'}}</b></h4></div>
       </mat-card>
     </div>
   </div>
@@ -70,12 +83,14 @@
             <div *ngIf="errorMessage" class="error-msg">
               {{errorMessage}}
             </div>
+            <br />
             <p style="float:left"><button mat-raised-button color="primary" type="submit">+Add</button></p>
+            <br />
           </form>
         </mat-expansion-panel>
         <mat-expansion-panel *ngFor=" let class of classes">
           <mat-expansion-panel-header (click)="getMagazines(class.ID)">
-            <mat-panel-title style="font-family: 'Mali', cursive;" >
+            <mat-panel-title style="font-family: 'Mali', cursive;">
               {{class.name}}
             </mat-panel-title>
             <mat-panel-description>
@@ -88,8 +103,11 @@
         </mat-expansion-panel>
       </mat-accordion>
     </div>
-    <div [hidden]="!curClass" style="width: 70%; background-color:lightblue; padding:1%; float:left">
-      <mat-card style="background-color:white; overflow:-webkit-paged-x;font-family: 'Mali', cursive;">
+    <!--<div [hidden]="!curClass" style="width: 70%; background-color:lightblue; padding:1%; float:left; overflow-y: scroll; height:-webkit-fill-available">
+      <mat-card style="background-color:white; overflow-y: scroll; height: 400px;font-family: 'Mali', cursive;">-->
+
+    <div [hidden]="!curClass" style="width: 70%; background-color:lightblue; padding:1%; float:left;overflow-y: scroll; height:-webkit-fill-available">
+      <mat-card style="background-color:white; overflow-y:scroll;font-family: 'Mali', cursive;height: 500px;">
         <p style="text-align:center">
           {{curClass}}<br>{{curMag}}
         </p>
@@ -125,12 +143,13 @@
             <th style="font-family: 'Mali', cursive;" mat-header-cell *matHeaderCellDef mat-sort-header> Total</th>
             <td style="font-family: 'Mali', cursive;" mat-cell *matCellDef="let element"> {{element.chapter}} </td>
           </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <mat-paginator #scheduledOrdersPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <!--<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>-->
       </mat-card>
-    </div>
-  </div>
 
-</div>
+    </div>
+
+  </div>

@@ -395,6 +395,30 @@ export class SigninService {
 
     return true;
   }
+  addMagazine(grade, name, pic) {
+    var newId = this.magazines.length;
+    this.magazines.push(
+      {
+        "id": newId,
+        "name": name,
+        "pic": "assets/" + pic,
+        "chapters": []
+      }
+    )
+    this.grades[grade-1].magazines.push(newId)
+    return true;
+  }
+  addGrade(name) {
+    this.grades.push(
+      {
+        "value": this.grades.length+1,
+        "desc": name,
+        "magazines": []
+      }
+    );
+
+    return true;
+  }
   getMagazinesForClass(grade) {
     var mags = this.grades[grade-1].magazines;
     return mags;

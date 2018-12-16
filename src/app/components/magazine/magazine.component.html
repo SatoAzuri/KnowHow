@@ -20,12 +20,18 @@
               <mat-panel-description>
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <span>
-              <input id="name" type="text" [(ngModel)]="name" />
-              <button (click)="getData()">Definition </button>
+            
+              <mat-form-field>
+                <input matInput placeholder="Enter word here" id="name" type="text" [(ngModel)]="name" />                
+              </mat-form-field>
+
+              <button mat-raised-button color="primary" (click)="getData()">Definition</button>
+
+              <!--<input id="name" type="text" [(ngModel)]="name" />
+              <button (click)="getData()">Definition </button>-->
               <br />
               <label>{{results}}</label>
-            </span>
+            
           </mat-expansion-panel>
           <mat-expansion-panel *ngIf="user.auth == 'Admin'">
             <mat-expansion-panel-header>
@@ -93,7 +99,7 @@
                     <div class="error-msg">{{errorMessage}}</div>
 
                       <br />
-                      <button mat-button type="submit">Next</button>
+                      <button mat-raised-button color="primary" matTooltip="Add content for this chapter next" type="submit">Next</button>
                       <!--Form Value: {{ chapterForm.value | json }}
                       <p>
                         Form Status: {{ chapterForm.status }}
@@ -136,8 +142,8 @@
                   <br />
                   <div>
                     <!--<button mat-button matStepperPrevious [disabled]="addAnother">Back</button>-->
-                    <button mat-button (click)="addContent(1, stepper)">Add Another</button>
-                    <button mat-button type="submit">Next</button>
+                    <button mat-raised-button color="primary" style="margin-right: 10px;" matTooltip="Save this content and add another" (click)="addContent(1, stepper)">+Add</button>
+                    <button mat-raised-button color="primary" matTooltip="Add Assignment next" type="submit">Next</button>
                     <!--<p>
       Form Value: {{ contentForm.value | json }}
     </p>
@@ -185,9 +191,9 @@
 
                     <mat-form-field [ngClass]="{ 'is-invalid': f3.correctAnswer.errors }">
                       <mat-select placeholder="Choose Correct Answer" formControlName="correctAnswer">
-                        <mat-option value="f3.option1.value">{{f3.option1.value}}</mat-option>
-                        <mat-option value="f3.option2.value">{{f3.option2.value}}</mat-option>
-                        <mat-option value="f3.option3.value">{{f3.option3.value}}</mat-option>
+                        <mat-option [value]="f3.option1.value">{{f3.option1.value}}</mat-option>
+                        <mat-option [value]="f3.option2.value">{{f3.option2.value}}</mat-option>
+                        <mat-option [value]="f3.option3.value">{{f3.option3.value}}</mat-option>
                       </mat-select>
                       <div *ngIf="f3.correctAnswer.errors" class="error-msg">
                         <div *ngIf="f3.correctAnswer.errors.required">Correct Answer is required.</div>
@@ -204,20 +210,20 @@
 
                   <br />
                   <!--<button mat-button matStepperPrevious>Back</button>-->
-                  <button mat-button (click)="addQuestion(1,stepper)">+ Add Question</button>
-                  <button mat-button type="submit">Next</button>
+                  <button mat-raised-button color="primary" style="margin-right: 10px;" matTooltip="Save this question and add another" (click)="addQuestion(1,stepper)">+ Add</button>                  
+                  <button mat-raised-button color="primary" type="submit">Next</button>
                   <!--Form Value: {{ questionForm.value | json }}
 
-  <p>
-    Form Status: {{ questionForm.status }}
-  </p>-->
+                  <p>
+                    Form Status: {{ questionForm.status }}
+                  </p>-->
                 </form>
               </mat-step>
               <mat-step>
                 <ng-template matStepLabel>Done</ng-template>
                 You successfuly added a new Chapter with content and assignment
                 <div>                  
-                  <button mat-button (click)="stepper.reset()">Want to add Another Chapter</button>
+                  <button mat-raised-button color="primary" matTooltip="Add another chapter" (click)="stepper.reset()">+Add</button>
                 </div>
               </mat-step>
             </mat-vertical-stepper>

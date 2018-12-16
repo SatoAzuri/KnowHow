@@ -3,5 +3,5 @@
   <button class="btn" mat-button routerLink="/about-us">About us</button>
   <button class="btn" mat-button routerLink="/contact-us">Contact us</button>
   <button class="btn" *ngIf="user" mat-button routerLink="/teacher">{{user.auth=='Student'? 'My Progress' : 'My Classes'}}</button>
-  <button class="btn" (click)="logout()" mat-button routerLink="/">{{user? 'Log out':'Sign in'}}</button>
+  <button class="btn" (click)="logout()" mat-button routerLink="/sign-in">{{user? 'Log out':'Sign in'}}</button>
 </div>

@@ -12,6 +12,7 @@ import { User, PeriodicElement, Grade, Magazine, Class, School } from '../../Mod
 
 export class SigninComponent implements OnInit {
   submitted = false;
+  errorMessage: string;
 
   profileForm = this.fb.group({
     schoolChoose: [null, Validators.required],
@@ -36,29 +37,26 @@ export class SigninComponent implements OnInit {
     }
 
     if (this.profileForm.valid) {
-      this.check = await this.ser.setUser(this.schools[0], this.profileForm.value.name, this.profileForm.value.password);
-      if (this.check) {
+      if (await this.ser.setUser(this.schools[0], this.profileForm.value.name, this.profileForm.value.password)) {
         console.log("check is: ", this.check)
-        
-        this.router.navigate(['/home',]);
+        this.router.navigate(['/',]);
       }
-     
+      else {
+        this.errorMessage= "Username or Password are incorrect"
+      }     
     }
-
   }
-
-
 
   ngOnInit() {
 
   }
 
-  username: string;
-  password: string;
-  signin() {
-    if (this.ser.setUser(this.schools[0], this.username, this.password)) {
-      this.router.navigate(['home/',]);
-    }
+  //username: string;
+  //password: string;
+  //signin() {
+  //  if (this.ser.setUser(this.schools[0], this.username, this.password)) {
+  //    this.router.navigate(['home/',]);
+  //  }
 
-  }
+  //}
 }

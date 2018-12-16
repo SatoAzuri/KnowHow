@@ -7,6 +7,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { User, PeriodicElement, Grade, Magazine, Class, School, Chapter, Assignment, Content } from '../../Models/classes';
 import { MatStepper } from '@angular/material';
+import { TooltipPosition } from '@angular/material';
 
 
 @Component({
@@ -92,20 +93,22 @@ export class MagazineComponent implements OnInit {
       if (this.ifUnique(this.contentForm.value.title, this.chapters[this.newChapterID].content)) {
         this.errorMessage = "";
         if (this.ser.addContent(this.newChapterID, this.contentForm.value.title, this.contentForm.value.content, "", "")) {
-          this.updateMagazine();
-          if(!v)
-            stepper.next();
+          this.updateMagazine();          
         }
+        if (this.addAnother) {
+          this.contentForm.reset();
+        }
+        else
+          stepper.next();
+
       }
       else {
         this.errorMessage = "Name should be unique.";
-        this.contentForm.value.title = "";
+        //this.contentForm.value.title = "";
       }
     }
 
-      if (this.addAnother) {
-        this.contentForm.reset();
-      }
+      
     
     
   }
@@ -119,6 +122,7 @@ export class MagazineComponent implements OnInit {
     correctAnswer: ['', Validators.required]
   });
   get f3() { return this.questionForm.controls; }
+
   addQuestion(v: boolean, stepper: MatStepper) {
     this.addAnother = v;      
 
@@ -126,25 +130,21 @@ export class MagazineComponent implements OnInit {
       if (this.ifUniqueAssignment(this.questionForm.value.question, this.chapters[this.newChapterID].assignment)) {
         this.errorMessage = "";
         if (this.ser.addAssignment(this.newChapterID, this.questionForm.value.question, this.questionForm.value.option1, this.questionForm.value.option2, this.questionForm.value.option3, this.questionForm.value.correctAnswer, "")) {
-          this.updateMagazine();
-          if(!v)
-            stepper.next();
+          this.updateMagazine();          
         }
+        if (this.addAnother) {
+          this.contentForm.reset();
+        }
+        else
+          stepper.next();
       }
       else {
         this.errorMessage = "Question should be unique.";
         this.questionForm.value.question = "";
       }
-    }
-
-      if (this.addAnother) {
-        this.questionForm.reset();
-      }
-    
+    } 
   }
-  addAnotherQuestion() {
-    this.questionForm.reset();
-  }
+  
 
   ngOnInit() {
     this.magazineId = this.route.snapshot.paramMap.get('id');

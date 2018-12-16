@@ -24,6 +24,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material';
 import { MenuComponent } from './components/menu/menu.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -48,6 +49,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     BrowserModule,
     MatPaginatorModule,
     MatTableModule,
+    MatTooltipModule,
     MatSortModule,
     MatButtonModule,
     MatStepperModule,
@@ -84,11 +86,11 @@ import { MatStepperModule } from '@angular/material/stepper';
         component: MagazineComponent
       },
       {
-        path: 'home',
+        path: '',
         component: HomepageComponent
       },
       {
-        path: '',
+        path: 'sign-in',
         component: SigninComponent
       },
       {
