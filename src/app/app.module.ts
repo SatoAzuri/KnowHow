@@ -64,7 +64,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatTabsModule,
     HttpModule,
     FormsModule,
-    FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
