@@ -1,35 +1,270 @@
-<div *ngIf="user">
-  <mat-card style="padding-bottom:10px">
-    <mat-card-title>
-      <h1 style="text-align:center; font-family: 'Mali', cursive;"> {{magazine.name}}</h1>
-    </mat-card-title>
-  </mat-card>
-  <div style="background-color:lightblue; width: auto; height: -webkit-fill-available; margin-bottom: 8%;">
+<app-menu [user]="user"></app-menu>
+<div class="jumbotron">
 
-    <div style="width: 30%;  padding:1%; float:left;">
-      <mat-accordion *ngFor="let chapter of chapters">
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{chapter.name}}
-            </mat-panel-title>
-            <mat-panel-description>
-              {{chapter.type}}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <ul>
-            <li *ngFor="let item of chapter.content">{{item.title}}</li>
-          </ul>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
-    <div style="width: 70%;  padding:1%; float:left;">
-      <mat-card style="background-color:white;overflow-y: scroll;height: -webkit-fill-available;">
-        <app-chapter></app-chapter>
-      </mat-card>
+  <div *ngIf="user">
+    <mat-card style="padding-bottom:10px">
+      <mat-card-title>
+        <h1 style="text-align:center; font-family: 'Mali', cursive;"> {{magazine.name}}</h1>
+      </mat-card-title>
+    </mat-card>
+    <div style="background-color:lightblue; width: auto; height: -webkit-fill-available; margin-bottom: 8%;">
+
+      <div style="width: 30%;  padding:1%; float:left;">
+
+        <mat-accordion multi="false">
+          <mat-expansion-panel *ngIf="user.auth != 'Admin'">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Dictionary
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            
+              <mat-form-field>
+                <input matInput placeholder="Enter word here" id="name" type="text" [(ngModel)]="name" />                
+              </mat-form-field>
+
+              <button mat-raised-button color="primary" (click)="getData()">Definition</button>
+
+              <!--<input id="name" type="text" [(ngModel)]="name" />
+              <button (click)="getData()">Definition </button>-->
+              <br />
+              <label>{{results}}</label>
+            
+          </mat-expansion-panel>
+          <mat-expansion-panel *ngIf="user.auth == 'Admin'">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Add Chapter +
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+          <mat-expansion-panel *ngFor="let chapter of chapters">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{chapter.name}}
+              </mat-panel-title>
+              <mat-panel-description>
+                {{chapter.type}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ol>
+              <li (click)="changeChapter(chapter.id)">Content</li>
+              <li (click)="changeAssignment(chapter.id)">Assignment</li>
+            </ol>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+
+
+      </div>
+      <div style="width: 70%;  padding:1%; float:left;">
+        <mat-card style="background-color:white;overflow-y: scroll;height: -webkit-fill-available;">
+
+          <app-chapter *ngIf="!isAssignment && user.auth != 'Admin'" [chapter]="chapter"></app-chapter>
+
+          <app-assignment *ngIf="isAssignment && user.auth != 'Admin'" [assignment]="assignment" [user]="user" [magazinID]="magazinID" [chapterID]="chapterID"></app-assignment>
+
+          <div class="container" *ngIf="user.auth=='Admin'">
+            <mat-vertical-stepper [linear]="!isLinear" #stepper>
+              <mat-step [stepControl]="chapterForm" [editable]="false" [completed]="chapterUnique">
+                <form [formGroup]="chapterForm" (ngSubmit)="addChapter(stepper)">
+                  <ng-template matStepLabel>Fill out chapter information</ng-template>
+
+                  <div class="example-container">
+
+                    <mat-form-field [ngClass]="{ 'is-invalid': f.chapterName.errors }">
+                      <input matInput placeholder="Chapter Name" type="text" formControlName="chapterName">
+                      <div *ngIf="f.chapterName.errors" class="error-msg">
+                        <div *ngIf="f.chapterName.errors.required">Chapter Name is required.</div>
+                      </div>
+                    </mat-form-field>
+
+                    <br />
+
+                    <mat-form-field id="form" [ngClass]="{ 'is-invalid': f.chapterType.errors }">
+                      <mat-select placeholder="Chapter Subject" formControlName="chapterType">
+                        <mat-option *ngFor="let subject of subjects" [value]="subject.value">
+                          {{subject.viewValue}}
+                        </mat-option>
+                      </mat-select>
+                      <div *ngIf="f.chapterType.errors" class="error-msg">
+                        <div *ngIf="f.chapterType.errors.required">Chapter type is required.</div>
+                      </div>
+                    </mat-form-field>
+                    <br />
+                    <div class="error-msg">{{errorMessage}}</div>
+
+                      <br />
+                      <button mat-raised-button color="primary" matTooltip="Add content for this chapter next" type="submit">Next</button>
+                      <!--Form Value: {{ chapterForm.value | json }}
+                      <p>
+                        Form Status: {{ chapterForm.status }}
+                      </p>-->
+                    </div>
+</form>
+              </mat-step>
+
+              <mat-step [stepControl]="contentForm" [editable]="false">
+                <form [formGroup]="contentForm" (ngSubmit)="addContent(0, stepper)">
+                  <ng-template matStepLabel>Fill out your content for chapter</ng-template>
+                  <div class="example-container">
+                    <br />
+                    <mat-form-field [ngClass]="{ 'is-invalid': f2.title.errors }">
+                      <input matInput placeholder="Title" type="text" formControlName="title" />
+                      <div *ngIf="f2.title.errors" class="error-msg">
+                        <div *ngIf="f2.title.errors.required">Title is required.</div>
+                      </div>
+                    </mat-form-field>
+                    <br />
+
+                    <mat-form-field [ngClass]="{ 'is-invalid': f2.content.errors }">
+                      <textarea matInput placeholder="Content" formControlName="content"></textarea>
+                      <div *ngIf="f2.content.errors" class="error-msg">
+                        <div *ngIf="f2.content.errors.required">Content is required.</div>
+                      </div>
+                    </mat-form-field>
+
+                    <div>
+                      If any photo, video or files to add:
+                    </div>
+                    <div ng-app="app" ng-controller="AppCtrl">
+                      <input name="myFile" type="file" />
+                    </div>
+                    <input type="file" ng-model="vm.uploadme" />
+                  </div>
+                  <br />
+                  <div class="error-msg">{{errorMessage}}</div>
+
+                  <br />
+                  <div>
+                    <!--<button mat-button matStepperPrevious [disabled]="addAnother">Back</button>-->
+                    <button mat-raised-button color="primary" style="margin-right: 10px;" matTooltip="Save this content and add another" (click)="addContent(1, stepper)">+Add</button>
+                    <button mat-raised-button color="primary" matTooltip="Add Assignment next" type="submit">Next</button>
+                    <!--<p>
+      Form Value: {{ contentForm.value | json }}
+    </p>
+    <p>
+      Form Status: {{ contentForm.status }}
+    </p>-->
+                  </div>
+                </form>
+              </mat-step>
+              <mat-step [stepControl]="questionForm" [editable]="false">
+                <form [formGroup]="questionForm" (ngSubmit)="addQuestion(0,stepper)">
+                  <ng-template matStepLabel>Add Assignment</ng-template>
+                  <div class="example-container">
+                    <mat-form-field [ngClass]="{ 'is-invalid': f3.question.errors }">
+                      <textarea matInput placeholder="Question" formControlName="question"></textarea>
+                      <div *ngIf="f3.question.errors" class="error-msg">
+                        <div *ngIf="f3.question.errors.required">Question is required.</div>
+                      </div>
+                    </mat-form-field>
+
+                    <br />
+
+                    <mat-form-field [ngClass]="{ 'is-invalid': f3.option1.errors }">
+                      <textarea matInput placeholder="Option1" formControlName="option1"></textarea>
+                      <div *ngIf="f3.option1.errors" class="error-msg">
+                        <div *ngIf="f3.option1.errors.required">Option1 is required.</div>
+                      </div>
+                    </mat-form-field>
+                    <br />
+                    <mat-form-field [ngClass]="{ 'is-invalid': f3.option2.errors }">
+                      <textarea matInput placeholder="Option2" formControlName="option2"></textarea>
+                      <div *ngIf="f3.option2.errors" class="error-msg">
+                        <div *ngIf="f3.option2.errors.required">Option2 is required.</div>
+                      </div>
+                    </mat-form-field>
+                    <br />
+                    <mat-form-field [ngClass]="{ 'is-invalid': f3.option3.errors }">
+                      <textarea matInput placeholder="Option3" formControlName="option3"></textarea>
+                      <div *ngIf="f3.option3.errors" class="error-msg">
+                        <div *ngIf="f3.option3.errors.required">Option3 is required.</div>
+                      </div>
+                    </mat-form-field>
+
+                    <br />
+
+                    <mat-form-field [ngClass]="{ 'is-invalid': f3.correctAnswer.errors }">
+                      <mat-select placeholder="Choose Correct Answer" formControlName="correctAnswer">
+                        <mat-option [value]="f3.option1.value">{{f3.option1.value}}</mat-option>
+                        <mat-option [value]="f3.option2.value">{{f3.option2.value}}</mat-option>
+                        <mat-option [value]="f3.option3.value">{{f3.option3.value}}</mat-option>
+                      </mat-select>
+                      <div *ngIf="f3.correctAnswer.errors" class="error-msg">
+                        <div *ngIf="f3.correctAnswer.errors.required">Correct Answer is required.</div>
+                      </div>
+                    </mat-form-field>
+                    <br />
+                    <div>
+                      If any photo, video or files to add:
+                    </div>
+                    <input type="file" />
+                  </div>
+                  <br />
+                  <div class="error-msg">{{errorMessage}}</div>
+
+                  <br />
+                  <!--<button mat-button matStepperPrevious>Back</button>-->
+                  <button mat-raised-button color="primary" style="margin-right: 10px;" matTooltip="Save this question and add another" (click)="addQuestion(1,stepper)">+ Add</button>                  
+                  <button mat-raised-button color="primary" type="submit">Next</button>
+                  <!--Form Value: {{ questionForm.value | json }}
+
+                  <p>
+                    Form Status: {{ questionForm.status }}
+                  </p>-->
+                </form>
+              </mat-step>
+              <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                You successfuly added a new Chapter with content and assignment
+                <div>                  
+                  <button mat-raised-button color="primary" matTooltip="Add another chapter" (click)="stepper.reset()">+Add</button>
+                </div>
+              </mat-step>
+            </mat-vertical-stepper>
+            <!--<mat-card>
+    <mat-card-title>
+      Please Enter Chapter Name and Subject!
+    </mat-card-title>
+    <form [formGroup]="chapterForm1" (ngSubmit)="onSubmit()">
+
+      <div class="example-container">
+        <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.chapterName.errors }">
+          <input matInput placeholder="Chapter Name" type="text" formControlName="chapterName">
+          <div *ngIf="submitted && f.chapterName.errors" class="error-msg">
+            <div *ngIf="f.chapterName.errors.required">Chapter Name is required.</div>
+          </div>
+        </mat-form-field>
+        <br />
+        <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.chapterType.errors }">
+          <mat-select placeholder="Chapter Subject" formControlName="chapterType">
+            <mat-option *ngFor="let subject of subjects" [value]="subject.value">
+              {{subject.viewValue}}
+            </mat-option>
+          </mat-select>
+          <div *ngIf="submitted && f.chapterType.errors" class="error-msg">
+            <div *ngIf="f.chapterType.errors.required">Chapter type is required.</div>
+          </div>
+        </mat-form-field>
+
+      </div>
+
+      <button mat-raised-button type="submit" color="primary" [disabled]="loading" (click)="addChapter()">Add Chapter</button>
+
+    </form>
+
+  </mat-card>-->
+          </div>
+        </mat-card>
+      </div>
     </div>
   </div>
-</div>
-<div *ngIf="!user" style="text-align:center">
-  Please sign in to see the content of magazine
+  <div *ngIf="!user" style="text-align:center">
+    Please sign in to see the content of magazine
+  </div>
 </div>

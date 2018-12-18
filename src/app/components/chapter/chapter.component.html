@@ -1,41 +1,40 @@
+<!--<input id="name1" type="text" [(ngModel)]="name" />
+<button   *ngIf="user.auth != 'Admin'"    (click)="getData()"> GetData </button>-->
+<!--div class="container">
+  <mat-card>
+    <mat-card-title>
+      Please Enter Chapter Name and Type!
+    </mat-card-title>
+    <form [formGroup]="chapterForm1" (ngSubmit)="onSubmit()">
+
+      <div class="example-container">
+        <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.chapterName.errors }">
+          <input matInput placeholder="Chapter Name" type="text" formControlName="chapterName">
+          <div *ngIf="submitted && f.chapterName.errors" class="error-msg">
+            <div *ngIf="f.chapterName.errors.required">Chapter Name is required.</div>
+          </div>
+        </mat-form-field>
+        <br />
+        <mat-form-field id="form" [ngClass]="{ 'is-invalid': submitted && f.chapterType.errors }">
+          <mat-select placeholder="Chapter Type" formControlName="chapterType">
+            <mat-option *ngFor="let chapter of chapterTypes" [value]="chapter.value">
+              {{chapter.viewValue}}
+            </mat-option>
+          </mat-select>
+          <div *ngIf="submitted && f.chapterType.errors" class="error-msg">
+            <div *ngIf="f.chapterType.errors.required">Chapter type is required.</div>
+          </div>
+        </mat-form-field>
+
+      </div>
+
+      <button mat-raised-button type="submit" color="primary" [disabled]="loading" (click)="onSubmit()">Submit</button>
+
+    </form>
+
+  </mat-card>
+
 <input id="name1" type="text" [(ngModel)]="name" />
 <button (click)="getData()"> GetData </button>
 <div *ngIf="user.auth == 'Admin'" class="container">
-  <!--Form1-->
-  <!--enter chapter name-->
-  <!--enter chapter type-->
-  <!--submit-->
-  <!--when submit-->
-  <!--Form2-->
-  <!--Enter title-->
-  <!--Enter content-->
-  <!--Add picture if any-->
-  <!--Add video if any-->
-  <!--Submit-->
-  <!--when submit-->
-  <!--Add another Form2 or Add Assignment-->
-  <!--if Form2 repeat Form2-->
-  <!--if Assignment show Form3-->
-  <!--Form3-->
-  <!--Add question-->
-  <!--Add pic if any-->
-  <!--Add video if any-->
-  <!--Add correct answer-->
-  <!--Submit-->
-  <!--Assignment-->
-  <!--Add question-->
-  <!--Add picture if any-->
-  <!--Add correct answer-->
-  <!--Submit-->
-  <!--Would u like to add another Assignment?-->
-</div>
-<div *ngIf="user.auth != 'Admin'">
-  <p>Not Parsed {{jsonData}}</p>
-  <!--<p>Prased {{jsonData.metadata | json}}</p>-->
-  <div *ngFor="let content of chapters[0].content" class="container">
-    <h3>{{content.title}}</h3>
-    <p id="left">{{content.content}}</p>
-    <img id="pic" [src]="content.pic" />
-    <iframe style="width:50%; float:left;height:255px" src="https://www.youtube.com/embed/yxAIBFsRpqU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-  </div>
-</div>
+  

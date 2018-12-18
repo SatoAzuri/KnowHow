@@ -1,33 +1,89 @@
+<app-menu [user]="user"></app-menu>
+<div class="jumbotron">
+
+  <mat-card id="card" style=" background-image: url('assets/knowledge.jpg'); background-repeat: no-repeat;background-size: 100%;">
+    <mat-card-header>
+      <mat-card-title style="font-size:30px; text-align:center;">
+        Welcome to Know-How<i *ngIf="user">, {{user.name}}</i>
+      </mat-card-title>
 
 
-<mat-card id="card" style=" background-image: url('assets/knowledge.jpg'); background-repeat: no-repeat;background-size: 100%;">
-  <mat-card-header>
-    <mat-card-title style="font-size:30px; text-align:center;">
-      Know-How
-    </mat-card-title>
+      <mat-card-subtitle style="text-align:center;">
+        Engage.Motivate.Inspire
+      </mat-card-subtitle>
+    </mat-card-header>
+    {{test}}
+    <mat-card-content style="display:inline-flex; overflow:auto; width:100%; text-align:center">
+      <div class="grade" *ngFor="let grade of grades" (click)="ChangeGrade(grade.value)">
+        <span>{{grade.value}}</span>
+      </div>
+      <div class="grade" *ngIf="admin" (click)="AddGrade()">
+        <h1>+</h1>
+      </div>
+    </mat-card-content>
 
+  </mat-card>
 
-    <mat-card-subtitle style="text-align:center;">
-      Engage.Motivate.Inspire
-    </mat-card-subtitle>
-  </mat-card-header>
-  {{test}}
-  <mat-card-content [hidden]="!gatData" style="display:inline-flex; overflow:auto; width:100%">    
-    <div class="grade" *ngFor="let grade of grades" (click)="ChangeGrade(grade)">
-      <span>{{grade}}</span>
-    </div>
-  </mat-card-content>
+  <!--<mat-tab-group >
+    <mat-tab *ngFor="let grade of grades" label="grade" (click)="ChangeGrade(grade)">
+      <i [hidden]="!ifgradeclicked">{{grade}}</i> <img *ngFor="let magazine of magazines.content|async" [src]=magazine.pic class="magazine-cover" (click)="OpenMagazine(magazine.id)" />
+    </mat-tab>
+   </mat-tab-group>-->
 
-</mat-card>
+  <mat-card *ngIf="ifaddMagazineClicked" style="text-align:center">
 
-<!--<mat-tab-group >
-  <mat-tab *ngFor="let grade of grades" label="grade" (click)="ChangeGrade(grade)">
-    <i [hidden]="!ifgradeclicked">{{grade}}</i> <img *ngFor="let magazine of magazines.content|async" [src]=magazine.pic class="magazine-cover" (click)="OpenMagazine(magazine.id)" />
-  </mat-tab>
- </mat-tab-group>-->
+    <form [formGroup]="magazineForm" (ngSubmit)="addNewMagazine()">
 
-<mat-card [hidden]="!ifgradeclicked">
-  <mat-card-content>
-    <img *ngFor="let magazine of magazines.content" [src]=magazine.pic class="magazine-cover" (click)="OpenMagazine(magazine.id)"/>
-  </mat-card-content>
-</mat-card>
+      <div class="example-container">
+        <mat-form-field [ngClass]="{ 'is-invalid': fmagazine.name.errors }">
+          <input matInput placeholder="Magazine Name" type="text" formControlName="name">
+          <div *ngIf="fmagazine.name.errors" class="error-msg">
+            <div *ngIf="fmagazine.name.errors.required">Magazine name is required.</div>
+          </div>
+        </mat-form-field>
+
+        <br />
+
+        <mat-form-field [ngClass]="{ 'is-invalid': fmagazine.pic.errors }" style="margin-bottom:-28px">
+          <input matInput placeholder="Magazine Image" type="text" formControlName="pic">
+          <div *ngIf="fmagazine.pic.errors" class="error-msg">
+            <div *ngIf="fmagazine.pic.errors.required">Magazine image is required.</div>
+          </div>
+        </mat-form-field>
+        <div class="error-msg">{{errorMessage}}</div>
+        <br />
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+        
+      </div>
+    </form>
+  </mat-card>
+
+  <mat-card *ngIf="ifgradeclicked" style="text-align:center;">
+    <mat-card-content *ngIf="magazines">
+      <img *ngFor="let magazine of magazines" [src]=magazine.pic class="magazine-cover" (click)="OpenMagazine(magazine.id)" />
+      <button *ngIf="admin" mat-raised-button color="primary" (click)="addMagazine()">+ Magazine</button>
+    </mat-card-content>
+    <div *ngIf="magazines.length == 0" class="error-msg" style="text-align:center;"><h3>{{errorMessage}}</h3></div>
+  </mat-card>
+
+  <mat-card *ngIf="ifAddGradeClicked" style="text-align:center">
+    <mat-card-content>
+      <label>Please enter the name of grade</label>
+      <br />
+      <form [formGroup]="gradeForm" (ngSubmit)="addNewGrade()" style="margin-bottom:40px;">
+        <mat-form-field class="example-full-width" [ngClass]="{ 'is-invalid': submitted && fgrade.name.errors }">
+          <input matInput placeholder="Grade Name" formControlName="name">
+          <div *ngIf="submitted && fgrade.name.errors" class="error-msg">
+            <div *ngIf="fgrade.name.errors.required">Grade name is required.</div>
+          </div>
+        </mat-form-field>
+        <div *ngIf="errorMessage" class="error-msg" style="text-align:center">
+          {{errorMessage}}
+        </div>
+        <br />
+        <button mat-raised-button color="primary" type="submit">+Add</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+</div>

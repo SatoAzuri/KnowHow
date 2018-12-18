@@ -5,3 +5,27 @@ table {
 th.mat-sort-header-sorted {
   color: black;
 }
+
+h1 {
+  font-family: 'Mali', cursive;
+}
+
+button {
+  border-radius: 2px;
+  float: right;
+  border: 1px solid green;
+  background-color: lightgreen;
+  margin: 15px;
+}
+
+.b1 {
+  margin: 0px;
+}
+
+.error-msg {
+  display: flex;
+  position: relative;
+  font-size: 75%;
+  bottom: -2em;
+  color: red;
+}

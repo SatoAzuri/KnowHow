@@ -23,15 +23,18 @@ import { HttpModule } from '@angular/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material';
-
+import { MenuComponent } from './components/menu/menu.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TeacherComponent } from './components/teacher/teacher.component';
+import { MatStepperModule } from '@angular/material/stepper';
 //import { user } from "./Models";
 @NgModule({
   declarations: [
     AppComponent,
+    MenuComponent,
     LogincomponentComponent,
     AboutUsComponent,
     ContactUsComponent,
@@ -46,14 +49,17 @@ import { TeacherComponent } from './components/teacher/teacher.component';
     BrowserModule,
     MatPaginatorModule,
     MatTableModule,
+    MatTooltipModule,
     MatSortModule,
     MatButtonModule,
+    MatStepperModule,
     MatCheckboxModule,
     MatInputModule,
     MatCardModule,
     MatExpansionModule,
     MatSelectModule,
     CommonModule,
+    ReactiveFormsModule,
     MatMenuModule,
     MatTabsModule,
     HttpModule,
@@ -80,12 +86,16 @@ import { TeacherComponent } from './components/teacher/teacher.component';
         component: MagazineComponent
       },
       {
-        path: 'home',
+        path: '',
         component: HomepageComponent
       },
       {
-        path: '',
+        path: 'sign-in',
         component: SigninComponent
+      },
+      {
+        path: 'teacher',
+        component: TeacherComponent
       }
     ])
   ],

@@ -1,6 +1,8 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { SigninService } from './signin.service';
+import { User, Class, Grade, Content, Magazine, School, Mag } from './Models/classes';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,15 +12,9 @@ import { SigninService } from './signin.service';
 })
 export class AppComponent implements OnInit {
   title = 'nata';
-  user: any;
-  constructor(private ser: SigninService) {
-    this.user = ser.getUser();
-  }
-
-  ngOnInit(): void {
-    
-    
-  }
+  constructor(private ser: SigninService, private router: Router) { }
+ 
+  ngOnInit(): void { }
 
 }
 
